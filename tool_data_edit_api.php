@@ -12,27 +12,14 @@ $result = [
 ];
 $sid = isset($_POST['sid']) ? intval($_POST['sid']) : 0;
 
-if(isset($_POST['name']) and !empty($sid)){
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $mobile = $_POST['mobile'];
-    $birthday = $_POST['birthday'];
-    $title = $_POST['title'];
-    $info = $_POST['info'];
-    $experience = $_POST['experience'];
-    $area = $_POST['area'];
-    $restaurant = $_POST['restaurant'];
-    $own_kitchen = $_POST['own_kitchen'];
-    $tool = $_POST['tool'];
-    $note = $_POST['note'];
+if(isset($_POST['tool_name']) and !empty($sid)){
+
+    $tool_name = $_POST['tool_name'];
 
     $result['post'] = $_POST;  // 做 echo 檢查
 
-    if (empty($name)
-    or empty($email) or empty($password) or empty($mobile) or empty($birthday) or empty($experience)
-//        or empty($own_kitchen)
-    ) { $result['errorCode'] = 400;
+    if(empty($tool_name)){
+        $result['errorCode'] = 400;
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
         exit;
     }
@@ -40,7 +27,7 @@ if(isset($_POST['name']) and !empty($sid)){
     // 1. 修改資料之前先確認該筆資料是否存在
     // 2. name 有沒有跟別筆的資料相同
 
-    $s_sql = "SELECT * FROM `chef` WHERE `sid`=?";
+    $s_sql = "SELECT * FROM `tool` WHERE `sid`=?";
     $s_stmt = $pdo->prepare($s_sql);
     $s_stmt->execute([$sid]);
 
@@ -61,39 +48,15 @@ if(isset($_POST['name']) and !empty($sid)){
             }
     }
 
-    $sql = "UPDATE `chef` SET
-             `name`=?, 
-             `email`=?, 
-             `password`=?, 
-             `mobile`=?, 
-             `birthday`=?, 
-             `title`=?, 
-             `info`=?, 
-             `experience`=?, 
-             `area`=?, 
-             `restaurant`=?, 
-             `own_kitchen`=?, 
-             `tool`=?,
-             `note`=? 
+    $sql = "UPDATE `tool` SET 
+                `tool_name`=?
                 WHERE `sid`=?";
 
     try {
         $stmt = $pdo->prepare($sql);
 
         $stmt->execute([
-            $_POST['name'],
-            $_POST['email'],
-            $_POST['password'],
-            $_POST['mobile'],
-            $_POST['birthday'], 
-            $_POST['title'],
-            $_POST['info'],
-            $_POST['experience'],
-            $_POST['area'],
-            $_POST['restaurant'],
-            $_POST['own_kitchen'],
-            $_POST['tool'],
-            $_POST['note'],
+            $_POST['tool_name'],
             $sid
         ]);
 

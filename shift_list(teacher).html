@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        .available {
+            background: pink;
+        }
+        ul{
+            list-style: none;
+        }
+        li{
+            display: inline-block;
+            border: 1px solid #ccc;
+            padding:5px;
+        }
+        .active {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="" method="GET">
+        <input type="hidden" name="lunchinput" value="" id="lunchinput">
+        <input type="submit">
+    </form>
+    <ul class="lunch_ul">
+        
+        <li class="lunch">1</li>
+        <li class="lunch">2</li>
+        <li class="lunch">3</li>
+        <li class="lunch">4</li>
+        <li class="lunch">5</li>
+        <li class="lunch">6</li>
+        <li class="lunch">7</li>
+        <li class="lunch">8</li>
+        <li class="lunch">9</li>
+        <li class="lunch">10</li>
+        <li class="lunch">11</li>
+        <li class="lunch">12</li>
+        <li class="lunch">13</li>
+        <li class="lunch">14</li>
+        <li class="lunch">15</li>
+        <li class="lunch">16</li>
+        <li class="lunch">17</li>
+        <li class="lunch">18</li>
+        <li class="lunch">19</li>
+        <li class="lunch">20</li>
+        <li class="lunch">21</li>
+        <li class="lunch">22</li>
+        <li class="lunch">23</li>
+        <li class="lunch">24</li>
+        <li class="lunch">25</li>
+        <li class="lunch">26</li>
+        <li class="lunch">27</li>
+        <li class="lunch">28</li>
+        <li class="lunch">29</li>
+        <li class="lunch">30</li>
+        <li class="lunch">31</li>
+    </ul>
+    <div id="info"></div>
+    <script>
+        const lunchinput=document.querySelector("#lunchinput")
+        const li = document.querySelectorAll("li.lunch");
+        const info = document.querySelector("#info")
+        let lunch={};
+        // var d= new Date()
+        // d.setDate(1);
+        // var firstd=d.getDay()
+        
+        
+        var lunchClick = function (event) {
+            const li = event.target;
+            const day = li.innerHTML;
+            if(li.className=='active'){
+                li.className='';
+                delete lunch[day];
+            } else {
+                li.className='active';
+                lunch[day] = 1;
+            }
+            info.innerHTML = JSON.stringify(lunch);
+                // item.className="available";
+                // lunch.push(day);
+                // info.innerHTML = lunch+"<br>";
+                // lunchinput.value=lunch
+            };
+        var lunch_ul = document.querySelector('.lunch_ul');
+
+        lunch_ul.addEventListener('click', lunchClick);
+
+        // for (let i = 0; i < 32; i++) {  
+        //     let item=li[i]
+        //     let day = li[i].innerHTML;
+        //     item.addEventListener('click', )
+        // }
+        
+    </script>
+</body>
+
+</html>

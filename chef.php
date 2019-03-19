@@ -25,7 +25,9 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include __DIR__ . '/_html_header.php' ?>
 <?php include __DIR__ . '/_navbar.php' ?>
+
 <br>
+<div class="container">
 <div class="form_data_font_style"><?= '總共' . $total_rows . '筆資料' ?></div>
 <div class="form_data_font_style"><?= '總共' . $total_pages . '頁' ?></div>
 
@@ -60,8 +62,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <br>
 </div>
 <br>
-
-<table class="table table-striped table-bordered">
+<table class="table-sm table-striped table-bordered ">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -74,15 +75,12 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th scope="col">Title</th>
             <th scope="col">Information</th>
             <th scope="col">Experience</th>
-            <th scope="col">Food Set</th>
             <th scope="col">Area</th>
             <th scope="col">Restaurant</th>
             <th scope="col">Own Kitchen</th>
             <th scope="col">Tool</th>
             <th scope="col">Note</th>
-            <div col-md-6>
-                <th scope="col">Web</th>
-                <th scope="col">Intro</th>
+            <div col-md-6>              
                 <th scope="col">刪除</th>
                 <th scope="col">編輯</th>
             </div>
@@ -101,7 +99,6 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td><?= $row['title'] ?></td>
             <td><?= $row['info'] ?></td>
             <td><?= $row['experience'] ?></td>
-            <td><?= $row['food_set'] ?></td>
             <td><?= $row['area'] ?></td>
 			<td><?= $row['restaurant'] ?></td>
             <td><?= $row['own_kitchen'] ?></td>
@@ -116,6 +113,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </tbody>
 </table>
 <br>
+</div>
 <script>
     function delete_it(sid) {
         if (confirm(`確定要刪除編號為 ${sid} 的資料嗎?`)) {

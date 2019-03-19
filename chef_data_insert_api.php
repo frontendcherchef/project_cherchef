@@ -1,5 +1,5 @@
 <?php
-require __DIR__. '/connect.php';
+require __DIR__ . '/connect.php';
 
 header('Content-Type: application/json');
 
@@ -8,28 +8,51 @@ $result = [
     'errorCode' => 0,
     'errorMsg' => '資料輸入不完整',
     'post' => [], // 做 echo 檢查      
-        
+
 ];
 
 if(isset($_POST['checkme'])){
     $name = $_POST['name'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
-    $web = $_POST['web'];
-    $intro = $_POST['intro'];
-
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $mobile = $_POST['mobile'];
+    $birthday = $_POST['birthday'];
+    $title = $_POST['title'];
+    $info = $_POST['info'];
+    $experience = $_POST['experience'];
+    $area = $_POST['area'];
+    $restaurant = $_POST['restaurant'];
+    $own_kitchen = $_POST['own_kitchen'];
+    $tool = $_POST['tool'];
+    $note = $_POST['note'];
+    
     $result['post'] = $_POST;  // 做 echo 檢查
 
-    if(empty($name) or empty($phone) or empty($address) or empty($intro)){
+    if (empty($name)
+     or empty($email) or empty($password) or empty($mobile) or empty($birthday) or empty($experience)
+//        or empty($own_kitchen)
+     ) {
         $result['errorCode'] = 400;
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
         exit;
     }
 
     $sql = "INSERT INTO `chef`(
-            `name`, `phone`, `address`, `web`, `intro`
+             `name`, 
+             `email`, 
+             `password`, 
+             `mobile`, 
+             `birthday`, 
+             `title`, 
+             `info`, 
+             `experience`, 
+             `area`, 
+             `restaurant`, 
+             `own_kitchen`, 
+             `tool`, 
+             `note`
             ) VALUES (
-              ?, ?, ?, ?, ?
+              ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?
             )";
 
     try {
@@ -37,13 +60,21 @@ if(isset($_POST['checkme'])){
 
         $stmt->execute([
             $_POST['name'],
-            $_POST['phone'],
-            $_POST['address'],
-            $_POST['web'],
-            $_POST['intro'],
+            $_POST['email'],
+            $_POST['password'],
+            $_POST['mobile'],
+            $_POST['birthday'], 
+            $_POST['title'],
+            $_POST['info'],
+            $_POST['experience'],
+            $_POST['area'],
+            $_POST['restaurant'],
+            $_POST['own_kitchen'],
+            implode(',',$_POST['tool']),
+            $_POST['note'],
         ]);
 
-        if($stmt->rowCount()==1) {
+        if ($stmt->rowCount() == 1) {
             $result['success'] = true;
             $result['errorCode'] = 200;
             $result['errorMsg'] = '';
@@ -51,10 +82,10 @@ if(isset($_POST['checkme'])){
             $result['errorCode'] = 402;
             $result['errorMsg'] = '資料新增錯誤';
         }
-    } catch(PDOException $ex){
+    } catch (PDOException $ex) {
+        $result['error'] = $ex->getMessage();
         $result['errorCode'] = 403;
         $result['errorMsg'] = '重複輸入';
     }
 }
 echo json_encode($result, JSON_UNESCAPED_UNICODE);
-
