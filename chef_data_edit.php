@@ -1,6 +1,11 @@
 <?php
 require __DIR__ . '/connect.php';
 
+//抓tool的checkbox的value跟名字配對
+$t_sql = "SELECT * FROM `tool` ORDER BY `tool`.`sid`";
+$t_stmt = $pdo->query($t_sql);
+$all_tool = $t_stmt->fetchAll(PDO::FETCH_ASSOC);
+
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 
 $sql = "SELECT * FROM chef WHERE sid=$sid";
@@ -100,7 +105,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                                             </div>
                                             <div class="col-3 d-flex">
                                                 <label for="nor">否 &nbsp</label>
-                                                <input <?= $row['restaurant'] === 0 ? 'checked' : " " ?> type="radio"
+                                                <input <?= $row['restaurant'] == 0 ? 'checked' : " " ?> type="radio"
                                                                                                          class="form-control mini-radio"
                                                                                                          id="nor"
                                                                                                          name="restaurant"
@@ -131,21 +136,22 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="tool">設備需求</label>
                                     <input type="text" class="form-control" id="tool" name="tool" placeholder=""
-                                           value="<?= $row['tool'] ?>">
+                                           value="<?= $row['tool'] ?>"></div> -->
 
-                                    <!-- <h6>設備需求</h6><br>
+                                    <h6>設備需求</h6><br>
                                         <div class="" >
-                                            <?php foreach ($all_tool as $tool) : ?>
+                                            <?php $require_tools=explode(",",$row['tool']) ?>
+                                            <?php foreach ($all_tool as $tool) :?>                                              
                                             <div style="display:inline-block">
-                                            <input type="checkbox" id="tool_<?= $tool['sid'] ?>" name="tool" value="<?= $tool['sid'] ?>">
+                                            <input <?php foreach ($require_tools as $require_tool): ?><?=$require_tool==$tool['sid']? 'checked':"";endforeach ?> type="checkbox" id="tool_<?= $tool['sid'] ?>" name="tool[]" value="<?= $tool['sid'] ?>">
                                             <label for="tool_<?= $tool['sid'] ?>" class="form-label"><?= $tool['tool_name'] ?></label>
                                             </div>
                                             <?php endforeach ?>
-                                        </div> -->
-                                </div>
+                                        </div>
+                                
                                 <div class="form-group">
                                     <label for="note">注意事項</label>
                                     <textarea class="form-control" id="note" name="note" placeholder="" cols="30"
@@ -165,7 +171,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         const submit_btn = document.querySelector('#submit_btn');
 
         const fields = [
-            'name', 'email', 'password', 'mobile', 'birthday', 'title', 'info', 'experience', 'area', 'restaurant', 'own_kitchen', 'tool', 'note'
+            'name', 'email', 'password', 'mobile', 'birthday', 'title', 'info', 'experience', 'area', 'restaurant', 'own_kitchen', 'tool[]', 'note'
         ];
 
         // 拿到每個欄位的參照

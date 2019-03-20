@@ -3,8 +3,8 @@ require __DIR__.'/connect.php';
 
 
 $sql = "INSERT INTO `tool` 
-(`name`, `phone`, `address`, `web`, `intro`)
-VALUES(?,?,?,?,?)";
+(`tool_name`)
+VALUES(?)";
 
 $res = $pdo->query("SELECT MAX(`sid`) AS maxsid FROM `tool`");
 $last_row = $res->fetch(PDO::FETCH_ASSOC);
@@ -18,11 +18,7 @@ $pdo->beginTransaction();
 for($i=1;$i<2;$i++)
 {
     $stmt->execute([
-        "測試用料理空間$last",
-        '02 1234',
-        '台北市測試用地址',
-        'website',
-        '測試用料理空間介紹'
+        "廚具$last" 
     ]);
 }
 

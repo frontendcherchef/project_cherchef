@@ -22,18 +22,41 @@ if(isset($_POST['checkme'])){
         exit;
     }
 
-    $sql = "INSERT INTO `tool`(
-            `tool_namename`
+    $sql = "INSERT INTO `chef`(
+             `name`, 
+             `email`, 
+             `password`, 
+             `mobile`, 
+             `birthday`, 
+             `title`, 
+             `info`, 
+             `experience`, 
+             `area`, 
+             `restaurant`, 
+             `own_kitchen`, 
+             `tool`, 
+             `note`
             ) VALUES (
-            ?
+              ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?
             )";
 
     try {
         $stmt = $pdo->prepare($sql);
 
         $stmt->execute([
-            $_POST['tool_name'],
-            
+            $_POST['name'],
+            $_POST['email'],
+            $_POST['password'],
+            $_POST['mobile'],
+            $_POST['birthday'], 
+            $_POST['title'],
+            $_POST['info'],
+            $_POST['experience'],
+            $_POST['area'],
+            $_POST['restaurant'],
+            $_POST['own_kitchen'],
+            implode(',',$_POST['tool']),
+            $_POST['note'],
         ]);
 
         if($stmt->rowCount()==1) {

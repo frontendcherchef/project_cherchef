@@ -1,12 +1,13 @@
 <?php 
 require __DIR__.'/connect.php';
-$page_name = 'tool';
 
-$per_page = 5;
+$upload_dir = 'C:/xampp/htdocs/test/Chef_pic/test/';
+
+$per_page = 10;
 $page = isset($_GET['page'])? intval($_GET['page']):1;
 
 //算總比數
-$t_sql = "SELECT COUNT(1) FROM tool";
+$t_sql = "SELECT COUNT(1) FROM chef_photo";
 $t_stmt = $pdo->query($t_sql);
 $total_rows = $t_stmt->fetch(PDO::FETCH_NUM)[0];
 
@@ -15,7 +16,7 @@ $total_rows = $t_stmt->fetch(PDO::FETCH_NUM)[0];
 $total_pages = ceil($total_rows/$per_page);
 if($page>$total_pages) $page =$total_pages;
 if($page<1) $page =1;
-$sql = sprintf("SELECT * FROM tool ORDER BY sid LIMIT %s, %s", ($page-1)*$per_page, $per_page);
+$sql = sprintf("SELECT * FROM chef_photo ORDER BY sid LIMIT %s, %s", ($page-1)*$per_page, $per_page);
 $stmt = $pdo->query($sql);
 
 //所有資料一次拿出來
@@ -26,7 +27,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include __DIR__. '/_html_header.php' ?>
 <?php include __DIR__. '/_navbar.php' ?>
 <br>
-<div class="form_data_font_style" style="color:blue;">廚具資料表</div>
+<div class="form_data_font_style" style="color:blue;">廚師圖片資料表</div>
 <div class="form_data_font_style"><?= '總共'.$total_rows.'筆資料' ?></div>
 <div class="form_data_font_style"><?= '總共'.$total_pages.'頁' ?></div>
 
@@ -69,19 +70,19 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <!-- 上排按鈕 -->
-<div class="center_div flex-row justify-content-center  ">
-  <a href="tool_insert.php"><button type="button" class="btn btn-primary  col-md-3  ">新增資料</button></a>
-  <a href="tool_insert.php"><button type="button" class="btn btn-primary  col-md-3  ">新增一筆測試資料</button></a>
+<div class="center_div">
+  <a href="chef_photo_insert.php"><button type="button" class="btn btn-primary  col-md-3  ">新增資料</button></a>
+  <a href="chef.php"><button type="button" class="btn btn-primary  col-md-3  ">回到廚師資料表</button></a>
   <br>
 </div>
 <br>
 <!-- Search -->
 
-<form name="form1" action="tool_data_search.php" method="post">
+<form name="form1" action="chef_photo_search.php" method="post">
   <div class="form-group "style="border:1px solid skyblue">
     <label for="search_input" >&nbsp搜尋:</label>
     <div class="col-md-3 inline_block">
-    <input type="text" class="form-control col-md-12" id="search_input" name="search_input" placeholder="廚具名稱">
+    <input type="text" class="form-control col-md-12" id="search_input" name="search_input" placeholder="廚師姓名">
     </div>
   <div class="col-md-3 inline_block">
   <button type="submit" class="btn btn-primary col-md-3" >Enter</button></div>
@@ -89,34 +90,48 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </div>
 <form>
 
+<!-- -->
+
 <table class="table table-striped table-bordered">
 <thead>
-    <tr>     
-      <th scope="col">#</th>
-      <th scope="col">Tool Name</th>
-      <div col-md-6>
+    <tr>
+      <th scope="col" >#</th>
+      <th scope="col">chef_sid</th>
+      <th scope="col" >chef_name</th></th>
+      <th scope="col" >file_name</th>
       <th scope="col">刪除</th>
       <th scope="col">編輯</th>
-      </div>
+ 
     </tr>
   </thead>
   <tbody>
   <?php foreach($rows as $row):?>
     <tr class="form_data_font_style">
       <td><?=$row['sid']?></td>
-      <td><?=$row['tool_name']?></td>
-     <!-- <td><a href="tool_delete.php?sid=<?= $row['sid']?>"><i class="fas fa-trash-alt"></i></a></td>    -->
-     <td><a href="javascript: delete_it(<?= $row['sid'] ?>)"><i class="fas fa-trash-alt"></i></a></td>   
-     <td><a href="tool_data_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit"></i></a></td>   
+      <td><?=$row['chef_sid']?></td>
+
+   <?php
+  
+   $stmt2 = $pdo->prepare("SELECT * FROM chef WHERE sid=?");
+   $stmt2->execute([$row['chef_sid']]); 
+   $user = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+    
+   ?>
+
+      <td><?=$user['name']?></td>
+      <td><?=$row['file_name']?></td>
+     <td><a href="javascript: delete_it(<?= $row['sid'] ?>,'<?= $row['file_name']?>')"><i class="fas fa-trash-alt"></i></a></td>   
+     <td><a href="chef_photo_data_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit"></i></a></td>   
     </tr>
 <?php endforeach; ?>
   </tbody>
 </table>
 <br>
 <script>
-        function delete_it(sid){
+        function delete_it(sid, file_name){
             if(confirm(`確定要刪除編號為 ${sid} 的資料嗎?`)){
-                location.href = 'tool_delete.php?sid=' + sid;
+                location.href = 'chef_photo_delete.php?sid=' + sid +'&file_name=' +file_name;
             }
         }
     </script>

@@ -92,7 +92,7 @@ if(isset($_POST['name']) and !empty($sid)){
             $_POST['area'],
             $_POST['restaurant'],
             $_POST['own_kitchen'],
-            $_POST['tool'],
+            implode(',',$_POST['tool']),
             $_POST['note'],
             $sid
         ]);
