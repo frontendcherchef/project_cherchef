@@ -38,6 +38,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include __DIR__. '/_navbar.php' ?>
 <br>
 <div class="container">
+<div class="form_data_font_style" style="color:orange;">餐廳資料表</div>
 <div class="form_data_font_style"><?= '總共'.$total_rows.'筆資料' ?></div>
 <div class="form_data_font_style"><?= '總共'.$total_pages.'頁' ?></div>
 
@@ -98,8 +99,8 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <form>
 <!--  -->
 
-<table class="table table-striped table-bordered">
-<thead>
+<table class="table table-warning table-hover">
+<thead class="bg-warning">
     <tr>
       <th scope="col">#</th>
       <th scope="col">餐廳名稱</th>
