@@ -79,8 +79,8 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <br>
 
 
-<table class="table table-striped table-bordered">
-<thead>
+<table class="table table-warning table-hover">
+<thead class="bg-warning">
     <tr>
       <th scope="col" >#</th>
       <th scope="col">餐廳sid</th>
