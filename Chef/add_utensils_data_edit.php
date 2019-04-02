@@ -17,7 +17,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 <?php include __DIR__. '/_navbar.php';  ?>
 
 <div class="container">
-    <!-- 上排按鈕 test test -->
+    <!-- 上排按鈕  -->
     <br>
     <div class="center_div">
     <a href="add_utensils.php"><button type="button" class="btn btn-warning  col-md-3 "><-回到資料表</button></a>
