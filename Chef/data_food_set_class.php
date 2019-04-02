@@ -101,6 +101,10 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             location.href = 'data_food_set_class_delete.php?sid=' + sid;
         }
     }
+
+    // 以下為即時搜尋新增
+=======
+
     $("#search_input").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function() {
@@ -109,5 +113,9 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         });
         console.log($("#myTable tr:visible").length)
     });
+
+    // 以上為即時搜尋新增
+=======
+
 </script>
 <?php include __DIR__ . '/_html_footer.php';  ?> 
