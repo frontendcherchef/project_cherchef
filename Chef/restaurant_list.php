@@ -74,7 +74,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </nav>
 </div>
 
-<!-- 上排按鈕 -->
+<!-- 上排按鈕 test-->
 <div class="center_div">
   <a href="restaurant_data_insert.php"><button type="button" class="btn btn-warning  col-md-3  ">新增資料</button></a>
   <a href="restaurant_test_insert.php"><button type="button" class="btn btn-warning  col-md-3  ">新增一筆測試資料</button></a>
