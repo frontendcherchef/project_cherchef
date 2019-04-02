@@ -86,7 +86,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- Search -->
 
 <form name="form1" action="restaurant_data_search.php" method="post">
-  <div class="form-group "style="border:1px solid skyblue">
+  <div class="form-group">
     <label for="search_input" >&nbsp搜尋:</label>
     <div class="col-md-3 inline_block">
     <input type="text" class="form-control col-md-12" id="search_input" name="search_input" placeholder="餐廳名稱">
