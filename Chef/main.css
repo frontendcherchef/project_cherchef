@@ -63,9 +63,9 @@ a.fascl-trash:hover{
     /* color: rgb(177, 252, 255); */
 }
 .mainbg{
-    background: url("/mytest/Chef/pic/bl_black_main_bg.jpg") no-repeat center bottom;
+    background: url("pic/bl_black_main_bg.jpg") no-repeat center bottom;
     background-size: cover;
-    height: calc(100vh - 61.08px);  
+    height: calc(100vh - 61.08px);
 }
 .icon-2{
     display: none;
@@ -115,7 +115,9 @@ a.fascl-trash:hover{
     .wrapper{
         top: 55%;
     }
-    
+    .buttons-toolbar>.search>input.form-control{
+        margin-bottom: 0.5rem !important;
+    }
   }
 .login_box{
     position: absolute;
@@ -236,9 +238,6 @@ path{
                             
     }
 
-
-
-
     .table-warning td  {
         border-color:#fff !important;
         border-bottom: 3px solid #fff;
@@ -249,4 +248,15 @@ path{
     }
     .table-warning thead{
         background: #e29346 !important;
+    }
+
+    .pagination>li.active>a.page-link {
+        background-color: #e29346 !important;
+        border-color: #e29346 !important;
+    }
+    .dropdown-menu>a.dropdown-item.active, a.dropdown-item:active {
+        background-color: #e29346 !important;
+    }
+    .buttons-toolbar>.search>input.form-control{
+        width: 510px !important;
     }
