@@ -97,9 +97,11 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td data-title="套餐大項"><?= $row['name'] ?></td>
                         <td data-title="套餐"><?= $row['c'] ?></td>
                         <td data-title="編輯">
-                            <a class="fascl fascl-edit" href="data_food_set_class_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit"></i></a>
-                        </td data-title="刪除">
-                        <td><a class="fascl fascl-trash" href="javascript: delete_it(<?= $row['sid'] ?>)">
+                            <a class="fascl fascl-edit" href="data_food_set_class_edit.php?sid=<?= $row['sid'] ?>">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        <td data-title="刪除">
+                            <a class="fascl fascl-trash" href="javascript: delete_it(<?= $row['sid'] ?>)">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
