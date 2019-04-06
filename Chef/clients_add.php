@@ -78,7 +78,7 @@ $page_name = 'clients_add';
                                 <img id="my_image" src="" alt="" width="200px">
                             </div>
                             <input type="file" class="form-control" id="my_file" name="my_file">
-                        </div> 
+                        </div>
                         <!-- <div class="form-group">
                             <label for="kitchen_pic"><span class="required">*</span>廚房照片上傳(至少三張)</label>
 
@@ -112,7 +112,7 @@ $page_name = 'clients_add';
             .then(response => response.json())
             .then(obj => {
                 console.log(obj);
-                my_image.setAttribute('src', 'uploads/' + obj.filename);
+                my_image.setAttribute('src', 'pic/uploads/' + obj.filename);
             });
     })
 
@@ -120,7 +120,7 @@ $page_name = 'clients_add';
                 $.ajax({
                     type: "POST",
                     url: "clients_add_api.php",
-                    dataType: "json",
+                    dataType: "text",
                     data:{
                         checkme: $("#checkme").val(),
                         name: $("#name").val(),
@@ -133,11 +133,7 @@ $page_name = 'clients_add';
                         birthday: $("#birthday").val()
                     },
                     success: function(data) {
-                        if (data.name) {
-                            alert("Add successfully")
-                        } else {
-
-                        }                   
+                        window.location.href = 'clients_list.php'  
                     },
                     error: function(jqXHR) {
                         alert("發生錯誤: " + jqXHR.status);

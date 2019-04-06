@@ -19,7 +19,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-        <div class="card mt-2" style="width: 500px;">
+        <div class="card mx-auto mt-2" style="width: 500px;">
            
             <div class="card-body">
                 <h5 class="card-title">會員資料</h5> 

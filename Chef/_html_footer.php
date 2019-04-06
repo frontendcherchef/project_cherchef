@@ -14,8 +14,8 @@
 <!-- bootstrap-table插件 -->
 
 <!-- jQuery Validate Plugin -->
-<script src="js/dist/jquery.validate.min.js"></script>
-<script src="js/dist/localization/messages_zh_TW.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/messages_zh_TW.min.js"></script>
 <!-- jQuery Validate Plugin -->
 
 <!-- datatable Plugin -->

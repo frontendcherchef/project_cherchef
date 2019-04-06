@@ -33,7 +33,7 @@
 <?php include __DIR__ . '/_navbar.php'; ?>
 <div class="container pt-3">
 
-<div><?= $page. " / ".$total_page." 頁，共 ".$total_rows." 筆資料" ?></div>
+<div><?= "第".$page. " / ".$total_page." 頁，共 ".$total_rows." 筆資料" ?></div>
     <!-- <div><?= $total_rows ?></div> -->
     <!-- <div><?= $stmt->rowCount() ?></div> -->
 
@@ -62,7 +62,7 @@
 
     <div class="row">
     <div class="col-lg-12 table-responsive card-list-table">
-    <table class="table table-warning table-hover">
+    <table id="list"  class="table table-warning table-hover">
         <thead class="bg-warning text-nowrap">
             <tr>
                 <th scope="col" data-field="sid">#</th>

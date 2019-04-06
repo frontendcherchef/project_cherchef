@@ -1,6 +1,6 @@
 <?php
 
-$upload_dir = __DIR__. "/uploads/";
+$upload_dir = __DIR__. "/pic/uploads/";
 
 header('Content-type: application/json');
 
