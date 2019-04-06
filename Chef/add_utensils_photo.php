@@ -27,71 +27,43 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include __DIR__. '/_html_header.php' ?>
 <?php include __DIR__. '/_navbar.php' ?>
 <br>
-<div class="container">
-    <div class="form_data_font_style" style="color:orange;">餐具圖片資料表</div>
-    <div class="form_data_font_style"><?= '總共'.$total_rows.'筆資料' ?></div>
-    <div class="form_data_font_style"><?= '總共'.$total_pages.'頁' ?></div>
+<div class="container pt-3">
+<div style="color:orange;">餐具資料表</div>
+<div><?= $page. " / ".$total_pages." 頁，共 ".$total_rows." 筆資料" ?></div>
+    <!-- <div><?= $total_rows ?></div> -->
+    <!-- <div><?= $stmt->rowCount() ?></div> -->
 
-    <!-- 頁數切換 -->
-    <div class ="col-md-4 center_div">
-    <nav aria-label="...">
-      <ul class="pagination pagination-sm">
 
-      <li class="page-item">
-          <a class="page-link" href="?page=1" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span></a>
-        </li>
 
-      <li class="page-item <?= $page<=1 ?'disable':''?>"> 
-            <a class ="page-link" href="?page=<?= $page-1 ?>">&lt;</a> 
-      </li>
-
-      <?php for($i=1;$i<=$total_pages;$i++): ?>
-        <li class="page-item <?= $i==$page ? 'active': ''?>"> 
-            <a class ="page-link bg-warning border-warning" href="?page=<?= $i ?>"><?= $i ?></a> 
-          </span>
-        </li>
-        <?php endfor ?>
-
-        <li class="page-item <?= $page>=$total_pages ?'disable':''?>"> 
-        <a class ="page-link" href="?page=<?= $page+1 ?>">&gt;</a> 
-      </li>
-
-      <li class="page-item">
-          <a class="page-link" href="?page=<?= $total_pages ?>" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-          </a>
-        </li>
-
-      </ul>
-    </nav>
-    <!--  -->
-    </div>
 
 
     <!-- 上排按鈕 -->
-    <div class="center_div">
-      <a href="add_utensils_photo_insert.php"><button type="button" class="btn btn-warning  col-md-3  ">新增資料</button></a>
+    <div class="center_div" >
+      <!-- <a href="add_utensils_photo_insert.php"><button type="button" class="btn btn-warning  col-md-3  ">新增資料</button></a> -->
       <a href="add_utensils.php"><button type="button" class="btn btn-warning  col-md-3  ">回到餐具資料表</button></a>
-      <br>
+      <a href="chef_data_insert.php"><i class="fas fa-plus-circle fa-2x text-warning mr-2"></i></a>
+      <a href="javascript: delete_it(<?= $row['sid'] ?>,'<?= $row['file_name']?>')"><i class="fas fa-minus-circle fa-2x text-warning"></i></a>
+
+     <br>
 </div>
 <br>
 
-
-<table class="table table-striped table-bordered">
-<thead>
-    <tr>
-      <th scope="col" >#</th>
-      <th scope="col">餐具SID</th>
+<table id="employee_grid" class="table table-warning  table-hover table-striped bootgrid-table" width="60%" cellspacing="0">
+<!-- <table class="table table-warning table-hover"> -->
+<thead class="bg-warning ">    
+    <tr class="text-center">
+      <th><input style="zoom: 1.5" type="checkbox" id="select_all"></th>
+      <th scope="col" >圖片編號</th>
+      <th scope="col">餐具編號</th>
       <th scope="col" >圖片路徑</th>
-      <th scope="col"><i class="fas fa-trash-alt"></i></th>
+      <!-- <th scope="col"><i class="fas fa-trash-alt"></i></th> -->
       <th scope="col"><i class="fas fa-edit"></i></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="text-center">
   <?php foreach($rows as $row):?>
     <tr class="form_data_font_style">
+    <td><input style="zoom: 1.5" type="checkbox" class="checkbox" data-emp-id="<?php echo $rows["id"]; ?>"></td>
       <td><?=$row['sid']?></td>
       <td><?=$row['add_utensils_sid']?></td>
 
@@ -101,8 +73,9 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
    $stmt2->execute([$row['add_utensils_sid']]); 
    $user = $stmt2->fetch(PDO::FETCH_ASSOC);
    ?>
+    
       <td><?=$row['file_name']?></td>
-     <td><a href="javascript: delete_it(<?= $row['sid'] ?>,'<?= $row['file_name']?>')"><i class="fas fa-trash-alt text-dark"></i></a></td>   
+     <!-- <td><a href="javascript: delete_it(<?= $row['sid'] ?>,'<?= $row['file_name']?>')"><i class="fas fa-trash-alt text-dark"></i></a></td>    -->
      <td><a href="add_utensils_photo_data_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit text-dark"></i></a></td>      
     </tr>
 <?php endforeach; ?>
@@ -110,7 +83,43 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </table>
 <br>
 </div>
+      <!-- 頁數切換 -->
+      <div class ="col-md-2 center_div">
+          <nav aria-label="...">
+              <ul class="pagination pagination-sm">
+
+                    <li class="page-item <?= $page<=1 ?'disable':''?>"> 
+                          <a class ="page-link" href="?page=<?= $page-1 ?>">&lt;</a> 
+                    </li>
+
+                    <?php for($i=1;$i<=$total_pages;$i++): ?>
+                    <li class="page-item <?= $i==$page ? 'active': ''?>"> 
+                        <a class ="page-link bg-warning border-warning" href="?page=<?= $i ?>"><?= $i ?></a> 
+                      
+                    </li>
+                    <?php endfor ?>
+
+                    <li class="page-item <?= $page>=$total_pages ?'disable':''?>"> 
+                    <a class ="page-link" href="?page=<?= $page+1 ?>">&gt;</a> 
+                  </li>
+
+              </ul>
+          </nav>
+      </div>
+
 <script>
+        $(document).on('click', '#select_all', function() {
+        $(".checkbox").prop("checked", this.checked);
+        $("#select_count").html($("input.checkbox:checked").length+" Selected");
+        });
+        $(document).on('click', '.checkbox', function() {
+        if ($('.checkbox:checked').length == $('.checkbox').length) {
+        $('#select_all').prop('checked', true);
+        } else {
+        $('#select_all').prop('checked', false);
+        }
+        $("#select_count").html($("input.checkbox:checked").length+" Selected");
+        });
         function delete_it(sid, file_name){
             if(confirm(`確定要刪除編號為 ${sid} 的資料嗎?`)){
                 location.href = 'add_utensils_photo_delete.php?sid=' + sid +'&file_name=' +file_name;

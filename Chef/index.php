@@ -1,5 +1,4 @@
 <style>
-
 </style>
 
 <?php require __DIR__. '/_cred.php'; ?>
@@ -16,7 +15,6 @@
     <div class="search-box ">
         <input class="search-txt" type="text" name="" placeholder="Type to search">
         <a class="search-btn " href="#">
-
             <i class="fas fa-search"></i>
         </a> 
     </div>

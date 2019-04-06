@@ -6,7 +6,7 @@ require __DIR__.'/connect.php';?>
 
 if(isset($_GET['sid'])) 
 {
-    $id = intval($_GET['sid']);
+    $id = trim($_GET['sid']);
     $result = $pdo->query("DELETE FROM `add_utensils` WHERE `sid`='$id'");
     if($result) echo "Delete success";
 
@@ -18,5 +18,3 @@ if(isset($_GET['sid']))
  }
  header('Location: add_utensils.php');
  ?>
-
-

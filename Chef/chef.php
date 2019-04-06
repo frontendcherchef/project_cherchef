@@ -48,7 +48,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <input type="text" class="form-control col-12 col-md-6 mr-2 my-2" id="search_input" name="search_input" placeholder="搜尋廚師姓名">
             <button type="submit" class="btn btn-warning col-12 col-md-2 col-lg-1 my-md-2 mb-2" >Search</button>
             </form>
-            <!-- -->
+           
             <nav class="d-flex mb-2">
                 <ul class="pagination pagination-sm mb-0 mr-auto align-items-center">
                     <li class="page-item <?= $page<=1 ? 'disabled' : '' ?>">

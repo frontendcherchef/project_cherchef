@@ -1,7 +1,7 @@
 <?php
 $db_host ='localhost';
 $db_name ='chef';
-$db_user ='morg';
+$db_user ='root';
 $db_pass ='admin';
 $dsn = sprintf('mysql:host=%s;dbname=%s', $db_host, $db_name);
 try {
@@ -11,7 +11,7 @@ try {
     $pdo->query("SET NAMES utf8");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // $pdo->query("use `mytest`"); // 指定使用的資料庫
+    // $pdo->query("use `mytest`"); // 指定使用的資料庫Ｄ
 } catch(PDOException $ex) {
     echo 'Connection failed:'. $ex->getMessage();
 }
