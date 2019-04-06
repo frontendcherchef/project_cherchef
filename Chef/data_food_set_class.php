@@ -67,8 +67,8 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12 table-responsive">
-            <table class="table table-warning table-hover text-nowrap"
+        <div class="col-lg-12 table-responsive card-list-table">
+            <table class="table table-warning table-hover"
              data-locale="zh-TW"
              data-toggle="table"
              data-pagination="true"
@@ -81,7 +81,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
              data-buttons-class="warning"
              data-buttons-toolbar=".buttons-toolbar"
             >
-                <thead class="bg-warning">
+                <thead class="bg-warning text-nowrap">
                     <tr>
                         <th scope="col" data-sortable="true" data-align="center">#</th>
                         <th scope="col" data-sortable="true">套餐大項</th>
