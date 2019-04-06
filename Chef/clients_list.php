@@ -33,18 +33,12 @@
 <?php include __DIR__ . '/_navbar.php'; ?>
 <div class="container pt-3">
 
-<div><?= $page. " / ".$total_page." 頁，共 ".$total_rows." 筆資料" ?></div>
+<div><?= "第".$page. " / ".$total_page." 頁，共 ".$total_rows." 筆資料" ?></div>
     <!-- <div><?= $total_rows ?></div> -->
     <!-- <div><?= $stmt->rowCount() ?></div> -->
 
     <div class="row">
         <div class="col-lg-12">
-            <!-- Search -->
-            <form class="form-inline d-flex" name="form1" action="clients_search.php" method="post">
-            <input type="text" class="form-control col-12 col-md-6 mr-2 my-2" id="search_input" name="search_input" placeholder="搜尋會員姓名">
-            <button type="submit" class="btn btn-warning col-12 col-md-2 col-lg-1 my-md-2 mb-2" >Search</button>
-            </form>
-            <!-- -->
             <nav class="d-flex mb-2">
                 <ul class="pagination pagination-sm mb-0 mr-auto align-items-center">
                     <li class="page-item <?= $page<=1 ? 'disabled' : '' ?>">
@@ -60,8 +54,6 @@
                     </li>
                 </ul>
                 <div>
-                    <a href="clients_profile_pic.php"><button type="button" class="btn btn-warning mr-2">管理圖片</button></a>
-                    <a href="clients_add_test.php"><button type="button" class="btn btn-warning mr-2">快速新增測試資料</button></a>
                     <a href="clients_add.php"><button type="button" class="btn btn-warning">新增資料表</button></a>
                 </div>
             </nav>
@@ -70,58 +62,48 @@
 
     <div class="row">
     <div class="col-lg-12 table-responsive card-list-table">
-    <table class="table table-warning table-hover">
+    <table id="list"  class="table table-warning table-hover">
         <thead class="bg-warning text-nowrap">
-        <tr>
-
-            <th scope="col">#</th>
-
-            <th scope="col">姓名</th>
-            <th scope="col">手機</th>
-            <th scope="col">電子信箱</th>
-            <th scope="col">生日</th>
-            <th scope="col">地址</th>
-            <th scope="col">
-                Edit <i class="far fa-edit"></i>
-            </th>
-            <th scope="col">
-                Delete <i class="far fa-trash-alt"></i>
-            </th>
-            <th scope="col">用戶照片</th>
-        </tr>
+            <tr>
+                <th scope="col" data-field="sid">#</th>
+                <th scope="col" data-field="name">姓名</th>
+                <th scope="col" data-field="gender">性別</th>
+                <th scope="col" data-field="mobile">手機</th>
+                <th scope="col" data-field="email">電子信箱</th>
+                <th scope="col" data-field="birthday">生日</th>
+                <th scope="col" data-field="address">地址</th>
+                <th scope="col">更多操作</th>
+            </tr>
         </thead>
         <tbody>
-        <?php foreach ($rows as $row) : ?>
-        <tr>
+                    <?php foreach ($rows as $row) : ?>
+                    <tr>
 
-            <td data-title="#"><?= $row['sid'] ?></td>
-<!--            <th>--><?//= $row['profile_pic'] ?><!--</th>-->
-            <td data-title="姓名"><?= $row['name'] ?></a></td>
-<!--            <th>--><?//= $row['Gender'] ?><!--</th>-->
-            <td data-title="手機"><?= $row['mobile'] ?></td>
-            <td data-title="電子信箱"><?= $row['email'] ?></td>
-            <td data-title="生日"><?= $row['birthday'] ?></td>
-            <td data-title="地址"><?= $row['address'] ?></td>
-            <td data-title="Edit">
-                <a href="clients_edit.php?sid=<?= $row['sid'] ?>"><i class="far fa-edit"></i></a>
-            </td>
-            <td data-title="Delete">
-                <a href="javascript:delete_data(<?= $row['sid'] ?>)">
-                    <i class="far fa-trash-alt"></i>
-                </a>
-            </td>
-            <td data-title="用戶照片">
-                <?php
-                foreach ($all_pics as $pic) :
-                    if ($row['sid'] == $pic['clients_sid']) : ?>
-                        <a href="/mytest/Chef_pic/client_photo/<?= $pic['file_name'] ?>" data-lightbox="roadtrip+<?=$pic['clients_sid']?>"><i class="fas fa-images"></i></a>
-                    <?php endif;
-                endforeach
-                ?>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-        </tbody>
+                        <td><?= '#'.$row['sid'] ?></td>
+                        <td><?= $row['name'] ?></a></td>
+                        <td><?= $row['gender'] ?></td>
+                        <td><?= $row['mobile'] ?></td>
+                        <td><?= $row['email'] ?></td>
+                        <td><?= $row['birthday'] ?></td>
+                        <td><?= $row['address'] ?></td>
+                        <td>
+                            <a href="clients_detail.php?sid=<?= $row['sid'] ?>"><i class="far fa-eye"></i></a>
+                            <a href="clients_edit.php?sid=<?= $row['sid'] ?>"><i class="far fa-edit"></i></a>
+                            <a href="javascript:delete_data(<?= $row['sid'] ?>)"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                        <!-- <td>
+                            <?php
+                            foreach ($all_pics as $pic) :
+                                if ($row['sid'] == $pic['clients_sid']) : ?>
+                            <a href="/pic/profile_pic/<?= $pic['file_name'] ?>" data-lightbox="roadtrip+<?= $pic['clients_sid'] ?>"><i class="fas fa-images"></i></a>
+                            <?php endif;
+                    endforeach
+                    ?>
+                        </td> -->
+                        
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
     </table>
     </div>
     </div>
@@ -129,10 +111,31 @@
 </div>
 <script>
         function delete_data(sid) {
-            if (confirm(`確認刪除編號${sid}的資料嗎？`)){
+        Swal.fire({
+            title: `確認刪除#${sid}的資料嗎？`,
+            text: "一經刪除即無法復原",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '確認刪除'
+            }).then((result) => {
+            if (result.value) {
+                Swal.fire(
+                '已成功刪除該筆資料',
+                'success'
+                )
                 location.href = 'clients_delete1.php?sid=' + sid;
             }
-
+            })
         }
+        
+
+        $(document).ready( function () {
+            $("#list").DataTable({
+                bPaginate: false,
+                bInfo: false,
+            });
+        } );
 </script>
 <?php include __DIR__ . '/_html_footer.php'; ?>

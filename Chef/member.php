@@ -73,8 +73,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <th scope="col">姓名</th>
       <th scope="col">電話</th>
       <th scope="col">地址</th>
-      <th scope="col">刪除</th>
-      <th scope="col">編輯</th>
+      <th scope="col">更多操作</th>
     
     </tr>
   </thead>
@@ -89,15 +88,16 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <td data-title="地址"><?=$row['address']?></td>
 
       <?php if ($row['email']=='admin@gmail.com'):?>
-      <td></td>
+
       <?php else:?>
-      <td data-title="刪除"><a href="javascript: delete_it(<?= $row['sid'] ?>)"><i class="fas fa-trash-alt"></i></a></td>   
-      <?php endif;?>
+      <td data-title="刪除"><a href="javascript: delete_it(<?= $row['sid'] ?>)"><i class="fas fa-trash-alt"></i></a>
+      <a href="member_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit"></i></a></td>   
+      <!-- <?php endif;?>
       <?php if ($row['email']=='admin@gmail.com'):?>
       <td></td>
       <?php else:?>
-      <td data-title="編輯"><a href="member_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit"></i></a></td>  
-      <?php endif;?>
+      <td data-title="編輯"></td>  
+      <?php endif;?> -->
      
     </tr>
 <?php endforeach; ?>
