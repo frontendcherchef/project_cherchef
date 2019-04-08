@@ -69,13 +69,30 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </ul> 
         
             </nav>  -->
-            <div class="float-right mb-2">
+            <div class="float-right ">
                     <a href="member_insert.php"><button type="button" class="btn btn-warning">新增成員</button></a>
+                 <!--選擇顯示欄位-->
+             <div class="btn btn-warning showSelect" style="position:relative;cursor:pointer">顯示欄位
+                        <ul class="mySelects">
+                            <li class="mySelect"> <input type="checkbox" id="email"> <label for="email">Email</label>
+                            </li>
+                            <li class="mySelect"> <input type="checkbox" id="name"> <label for="name">姓名</label>
+                            </li>
+                            <li class="mySelect"> <input type="checkbox" id="phone"> <label for="phone">電話</label>
+                            </li>
+                            <li class="mySelect"> <input type="checkbox" id="address"> <label for="address">地址</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--選擇顯示欄位-->
                 </div>
-                <div class="buttons-toolbar mb-2">
+                <div class="buttons-toolbar ">
             </div>
+            
         </div>
+
     </div>
+    
 
 <div class="row">
 <div class="col-lg-12 table-responsive card-list-table">
@@ -94,14 +111,15 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             >
 <thead class="bg-warning text-nowrap">
     <tr>
-    <th scope="col" data-sortable="true" data-align="center">#</th>
-      <th scope="col"  data-sortable="true" >Email</th>
-      <th scope="col"  data-sortable="true" >姓名</th>
-      <th scope="col"  data-sortable="true" >電話</th>
-      <th scope="col"  data-sortable="true" >地址</th>
+    <th scope="col" data-sortable="true" data-align="center" data-field="sid">#</th>
+      <th scope="col"  data-sortable="true" data-field="email" >Email</th>
+      <th scope="col"  data-sortable="true" data-field="name" >姓名</th>
+      <th scope="col"  data-sortable="true" data-field="phone" >電話</th>
+      <th scope="col"  data-sortable="true" data-field="address" >地址</th>
       <!-- <th scope="col">刪除</th>
       <th scope="col">編輯</th> -->
       <th scope="col">更多操作</th>
+    
     
     </tr>
   </thead>
@@ -110,10 +128,10 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <tr>
       
       <td data-title="#"><?=$row['sid']?></td>
-      <td data-title="Email"><?=$row['email']?></td>
-      <td data-title="姓名" class="text-nowrap"><?=$row['name']?></td>
-      <td data-title="電話" class="text-nowrap"><?=$row['phone']?></td>
-      <td data-title="地址"><?=$row['address']?></td>
+      <td data-title="Email" data-fieldName="email" ><?=$row['email'] ?></td>
+      <td data-title="姓名" class="text-nowrap" data-fieldName="name"><?=$row['name']?></td>
+      <td data-title="電話" class="text-nowrap" data-fieldName="phone"><?=$row['phone']?></td>
+      <td data-title="地址"data-fieldName="address"><?=$row['address']?></td>
 
       <?php if ($row['email']=='admin@gmail.com'):?>
       <td></td>
@@ -136,6 +154,31 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <br>
 
 <script>
+
+//初始勾選全部
+$(".mySelect input").prop("checked", true)
+//選單顯示or隱藏
+$(".showSelect").click(function() {
+    $(".mySelects").toggleClass("active")
+})
+$(".mySelect").click(function(event) {
+    event.stopPropagation();
+})
+$(".mySelect input").change(function(event) {
+    console.log("c")
+    $(".mySelect input:checkbox:not(:checked)").each(function() {
+        let fieldName = $(this).attr("id")
+        console.log(fieldName)
+        $(`thead th[data-field=${fieldName}]`).hide();
+        $(`tbody td[data-fieldName=${fieldName}]`).hide();
+    })
+    $(".mySelect input:checkbox:checked").each(function() {
+        let fieldName = $(this).attr("id")
+        console.log(fieldName)
+        $(`thead th[data-field=${fieldName}]`).show();
+        $(`tbody td[data-fieldName=${fieldName}]`).show();
+    })
+})
         function delete_it(sid){
             if(confirm(`確定要刪除編號為 ${sid} 的資料嗎?`)){
                 location.href = 'member_delete.php?sid=' + sid;

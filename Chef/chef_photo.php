@@ -28,7 +28,15 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include __DIR__. '/_navbar.php' ?>
 <br>
 <div class="container">
-<div class="form_data_font_style" style="color:orange;">廚師圖片資料表</div>
+<!-- breadcrumb -->
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb cyan lighten-4">
+      <li class="breadcrumb-item"  ><a class="" style="color:skyblue;" href="index.php">Home</a></li>
+      <li class="breadcrumb-item active" style="color:orange;">廚師圖片資料表</li>
+    </ol>
+  </nav>
+
 <div class="form_data_font_style"><?= '總共'.$total_rows.'筆資料' ?></div>
 <div class="form_data_font_style"><?= '總共'.$total_pages.'頁' ?></div>
 
@@ -107,7 +115,8 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
    ?>
 
       <td><?=$user['name']?></td>
-      <td><?=$row['file_name']?></td>
+    
+<td>   <img style="width:100px" src="../Chef_pic/chef_photo/<?= $row['file_name'] ?>">  </td>
      <td><a href="javascript: delete_it(<?= $row['sid'] ?>,'<?= $row['file_name']?>')"><i class="fas fa-trash-alt"></i></a></td>   
      <td><a href="chef_photo_data_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit"></i></a></td>   
     </tr>

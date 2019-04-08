@@ -1,23 +1,17 @@
 <?php
 require __DIR__. '/connect.php';
-
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
-
 $sql = "SELECT * FROM chef_photo WHERE sid=$sid";
-
 $stmt = $pdo->query($sql);
 if($stmt->rowCount()==0){
     header('Location: ./');
     exit;
 }
-
-
 $stmt = $pdo->query($sql);
 if($stmt->rowCount()==0){
     exit;
 }
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
 $chef_sql = "SELECT * FROM chef ORDER BY sid ";
 $chef_stmt = $pdo->query($chef_sql);
 $all_chef=$chef_stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -77,11 +71,9 @@ $all_chef=$chef_stmt->fetchAll(PDO::FETCH_ASSOC);
     <script>
     const info_bar = document.querySelector('#info_bar');
     const submit_btn = document.querySelector('#submit_btn');
-
     const fields = [
         'chef_sid',
     ];
-
     // 拿到每個欄位的參照
     const fs = {};
     for (let v of fields) {
@@ -89,25 +81,18 @@ $all_chef=$chef_stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     console.log(fs);
     console.log('fs.name:', fs.name);
-
-
     const checkForm = () => {
         let isPassed = true;
         info_bar.style.display = 'none';
-
         // 拿到每個欄位的值
         const fsv = {};
         for (let v of fields) {
             fsv[v] = fs[v].value;
         }
         console.log(fsv);
-
-
         if (isPassed) {
             let form = new FormData(document.form1);
-
             submit_btn.style.display = 'none';
-
             fetch('chef_photo_data_edit_api.php', {
                     method: 'POST',
                     body: form
@@ -115,13 +100,10 @@ $all_chef=$chef_stmt->fetchAll(PDO::FETCH_ASSOC);
                 .then(response => response.json())
                 .then(obj => {
                     console.log(obj);
-
                     info_bar.style.display = 'block';
-
                     if (obj.success) {
                         info_bar.className = 'alert alert-success';
                         let t = 3;
-
                         function countdown() {
                             t -= 1;
                             info_bar.innerHTML = `資料修改成功，${t}秒後返回列表`;
@@ -139,11 +121,8 @@ $all_chef=$chef_stmt->fetchAll(PDO::FETCH_ASSOC);
                             info_bar.style.display = 'none';
                         }, 1500);
                     }
-
                     submit_btn.style.display = 'block';
                 });
-
-
         }
         return false;
     };
