@@ -33,6 +33,12 @@
 <?php include __DIR__ . '/_html_header.php'; ?>
 <?php include __DIR__ . '/_navbar.php'; ?>
 <div class="container pt-3">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb cyan lighten-4">
+      <li class="breadcrumb-item"  ><a class="" style="color:skyblue;" href="index.php">Home</a></li>
+      <li class="breadcrumb-item active" style="color:orange;">會員資料表</li>
+    </ol>
+</nav>
 <h5 class="mb-2" style="color:#e29346">會員資料表</h5>
 <!-- <div><?= "第".$page. " / ".$total_page." 頁，共 ".$total_rows." 筆資料" ?></div> -->
     <!-- <div><?= $total_rows ?></div> -->
@@ -146,11 +152,11 @@
         }
         
 
-        $(document).ready( function () {
-            $("#list").DataTable({
-                bPaginate: false,
-                bInfo: false,
-            });
-        } );
+        // $(document).ready( function () {
+        //     $("#list").DataTable({
+        //         bPaginate: false,
+        //         bInfo: false,
+        //     });
+        // } );
 </script>
 <?php include __DIR__ . '/_html_footer.php'; ?>
