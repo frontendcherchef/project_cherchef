@@ -18,13 +18,13 @@ if(isset($_POST['name']) and !empty($sid)){
     $name = $_POST['name'];
     $rent = $_POST['rent'];
     $price = $_POST['price'];
-    $quantity = $_POST['quantity'];
+    // $quantity = $_POST['quantity'];
     $details = $_POST['details'];
     $intro = $_POST['intro'];
 
     $result['post'] = $_POST;  // 做 echo 檢查
 
-    if(empty($clients) or empty($name) or empty($rent) or empty($price) or empty($quantity) or empty($details) or empty($intro)){
+    if(empty($clients) or empty($name) or empty($rent) or empty($price) or empty($details) or empty($intro)){
         $result['errorCode'] = 400;
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
         exit;
@@ -59,7 +59,7 @@ if(isset($_POST['name']) and !empty($sid)){
                 `name`=?,
                 `rent`=?,
                 `price`=?,
-                `quantity`=?,
+                -- `quantity`=?,
                 `details`=?,
                 `intro`=? 
                 WHERE `sid`=?";
@@ -72,7 +72,7 @@ if(isset($_POST['name']) and !empty($sid)){
             $_POST['name'],
             $_POST['rent'],
             $_POST['price'],
-            $_POST['quantity'],
+            // $_POST['quantity'],
             $_POST['details'],
             $_POST['intro'],
             $sid

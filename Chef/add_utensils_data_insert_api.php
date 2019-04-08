@@ -16,7 +16,7 @@ if(isset($_POST['checkme'])){
     $name = $_POST['name'];
     $rent = $_POST['rent'];
     $price = $_POST['price'];
-    $quantity = $_POST['quantity'];
+    // $quantity = $_POST['quantity'];
     $details = $_POST['details'];
     $intro = $_POST['intro'];
 
@@ -24,7 +24,7 @@ if(isset($_POST['checkme'])){
     $result['post'] = $_POST;  // 做 echo 檢查
 
     
-    if(empty ($clients) or empty($name) or empty($rent) or empty($price) or empty($quantity) or empty($details) or empty($intro)){
+    if(empty ($clients) or empty($name) or empty($rent) or empty($price) or empty($details) or empty($intro)){
         $result['errorCode'] = 400;
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
         exit;
@@ -32,9 +32,9 @@ if(isset($_POST['checkme'])){
 
 
     $sql = "INSERT INTO `add_utensils`(
-            `clients`,`name`, `rent`, `price`, `quantity`, `details`, `intro`
+            `clients`,`name`, `rent`, `price`, `details`, `intro`
             ) VALUES (
-              ?, ?, ?, ?, ?, ?, ?
+              ?, ?, ?, ?, ?, ?
             )";
 
     try {
@@ -45,7 +45,7 @@ if(isset($_POST['checkme'])){
             $_POST['name'],
             $_POST['rent'],
             $_POST['price'],
-            $_POST['quantity'],
+            // $_POST['quantity'],
             $_POST['details'],
             $_POST['intro'],
         ]);
