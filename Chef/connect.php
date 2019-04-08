@@ -1,7 +1,7 @@
 <?php
 $db_host ='localhost';
 $db_name ='chef';
-$db_user ='root';
+$db_user ='morg';
 $db_pass ='admin';
 $dsn = sprintf('mysql:host=%s;dbname=%s', $db_host, $db_name);
 try {
