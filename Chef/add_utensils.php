@@ -1,4 +1,3 @@
-
 <?php 
 require __DIR__.'/connect.php';
 $page_name = 'add_utensils';
@@ -53,7 +52,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                   <!-- <a href="chef_photo.php"><button type="button" class="btn btn-warning mr-2">管理圖片</button></a> -->
                   <!-- <a href="chef_insert.php"><button type="button" class="btn btn-warning mr-2">快速新增測試資料</button></a> -->
                       <a href="chef_data_insert.php"><i class="fas fa-plus-circle fa-2x text-warning mr-2"></i></a>
-                      <a href="javascript: delete_it(<?= $row['sid'] ?>)"><i class="fas fa-minus-circle fa-2x text-warning"></i></a>
+                      <a id="delete_records" href="javascript: delete_it(<?= $row['sid'] ?>)"><i class="fas fa-minus-circle fa-2x text-warning"></i></a>
 
                 </div>
                 
@@ -65,24 +64,29 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
  <!-- -->
 
 
- <div class="container">
- 
- <table class="table table-warning table-hover">    
-  <thead class="bg-warning text-nowrap">
+
+ <div class="row">
+ <table class="table table-warning table-hover">
+    <thead class="bg-warning text-nowrap">
           <tr class="text-center">
-              <th><input style="zoom: 1.5" type="checkbox" id="checkAll"></th>
-              <th scope="col" data-sortable="true">商品編號</th>
-              <th scope="col" data-sortable="true">會員編號</th>
-              <th scope="col" data-sortable="true">商品名稱</th>
-              <th scope="col" data-sortable="true">租借金額</th>
-              <th scope="col" data-sortable="true">購買金額</th>
+              <th><input style="zoom: 1.5" type="checkbox" id="select_all"></th>
+              <th scope="col">商品編號</th>
+              <th scope="col">會員編號</th>
+              <th scope="col">商品名稱</th>
+              <th scope="col">租借金額</th>
+              <th scope="col">購買金額</th>
               <!-- <th scope="col">訂購數量</th> -->
-              <th scope="col" data-sortable="true">詳細資訊</th>
-              <th scope="col" data-sortable="true">產品特色</th>
-              <th scope="col">操作</th>
+              <th scope="col">詳細資訊</th>
+              <th scope="col">產品特色</th>
+          <div col-md-6 >
+              <th scope="col">修改<i class="fas fa-edit"></i></th>
+              <!-- <th scope="col"><i class="fas fa-trash-alt"></i></th> -->
+              <!-- <th scope="col">瀏覽<i class="far fa-images"></i></i></th> -->
+              <th scope="col">圖片<i class="far fa-images"></i></th>
+              </div>
           </tr>
-  </thead>
-  <tbody id="tebleCon">
+        </thead>
+    <tbody>
         <?php foreach($rows as $row):?>
           <tr class="form_data_font_style ">
                   <td><input style="zoom: 1.5" type="checkbox" class="checkbox" data-id="<?php echo $rows["id"]; ?>"></td>
@@ -94,10 +98,18 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                   <!-- <td><?=$row['quantity']?></td> -->
                   <td><?=nl2br($row['details'])?></td>     
                   <td><?=nl2br($row['intro'])?></td>
-                  <td class="d-flex justify-content-around">
-                  <a href="add_utensils_data_edit.php?sid=<?= $row['sid'] ?>"><i class="far fa-edit "></i></a>
-                  <a href="add_utensils_photo.php?sid=<?= $row['sid'] ?>"><i class="far fa-eye "></i></a>
-                  </td>
+                  <td class="text-center"><a href="add_utensils_data_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit text-dark"></i></a></td>
+                  <!-- <td><a href="javascript: delete_it(<?= $row['sid'] ?>)"><i class=" fas fa-trash-alt text-dark"></i></a></td>   
+                  <td> -->
+                    <!-- <?php 
+                        foreach ($all_pics as $pic) :
+                        if ($row['sid'] == $pic['add_utensils_sid']) : ?>
+                        <a href="/mytest/Chef_pic/add_utensils_photo/<?= $pic['file_name'] ?>" data-lightbox="roadtrip+<?=$pic['add_utensils_sid']?>"><i class="fas fa-images"></i></a>
+                        <?php endif;
+                        endforeach
+                    ?> -->
+                  
+                  <td class="text-center"><a href="add_utensils_photo_search.php?search_input=<?= $row['name'] ?>&add_utensils_sid=<?= $row['sid'] ?>"><i class="far fa-images text-dark"></i></a></td>
           </tr>
       <?php endforeach; ?>
         </tbody>
@@ -133,42 +145,45 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
     <script>
-      var dataCount=$("tbody tr").length;
-      $("tbody :checkbox").click(function(){
-        			if($(this).prop("checked")){
-  				$(this).parent().parent().addClass("active");
-  			}else{
-  				$(this).parent().parent().removeClass("active");
-  			}
-
-  			//get count
-  			var checkCount=$("tbody :checkbox:checked").length;
-  			if(checkCount==dataCount){
-  				$("#checkAll").prop("checked", true);
-  			}else{
-  				$("#checkAll").prop("checked", false);
-  			}
-
-  		});
-  		$("#checkAll").click(function(){
-  			if($(this).prop("checked")){
-  				$("tbody tr td").find(":checkbox").prop("checked", true);
-  				$("tbody tr").addClass("active");
-  			}else{
-  				$("tbody tr td").find(":checkbox").prop("checked", false);
-  				$("tbody tr").removeClass("active");
-  			}
-  		});
-
-      $("#tebleCon").on("click",".delete",function(){
-            $(this).closest("tr").remove();
+      // select_all
+        $(document).on('click', '#select_all', function() {
+            $(".checkbox").prop("checked", this.checked);
+            $("#select_count").html($("input.checkbox:checked").length+" Selected");
+        });
+        $(document).on('click', '.checkbox', function() {
+            if ($('.checkbox:checked').length == $('.checkbox').length) {
+              $('#select_all').prop('checked', true);
+          } else {
+              $('#select_all').prop('checked', false);
+        }
+        $("#select_count").html($("input.checkbox:checked").length+" Selected");
         });
 
+        // delete
+        $('#delete_records').on('click', function(sid) {
+            var add_utensils = [];
+            $(".checkbox:checked").each(function() {
+              add_utensils.push($(this).data('sid'));
+            });
+            if(add_utensils.length <=0) { alert("Please select records."); } else { WRN_PROFILE_DELETE = "Are you sure you want to delete "+(add_utensils.length>1?"these":"this")+" row?";
+            var checked = confirm(WRN_PROFILE_DELETE);
+            if(checked == true) {
+            var selected_values = add_utensils.join(",");
+            $.ajax({
+            type: "POST",
+            url: "delete_action.php",
+            cache:false,
+            data: 'sid='+selected_values,
+            success: function(response) {
+            // remove deleted employee rows
+            var sid = response.split(",");
+            for (var i=0; i < sid.length; i++ ) { $("#"+sid[i]).remove(); } } }); } } });
 
-        // function delete_it(sid){
-        //     if(confirm(`確定要刪除編號為 ${sid} 的資料嗎?`)){
-        //         location.href = 'add_utensils_delete.php?sid=' + sid;
-        //     }
-        // }
+
+        function delete_it(sid){
+            if(confirm(`確定要刪除編號為 ${sid} 的資料嗎?`)){
+                location.href = 'add_utensils_delete.php?sid=' + sid;
+            }
+        }
     </script>
 <?php include __DIR__. '/_html_footer.php';  ?>
