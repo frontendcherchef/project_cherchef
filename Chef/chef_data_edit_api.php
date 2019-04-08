@@ -21,7 +21,7 @@ if(isset($_POST['name']) and !empty($sid)){
     $title = $_POST['title'];
     $info = $_POST['info'];
     $experience = $_POST['experience'];
-    $area = $_POST['area'];
+    $area = isset($_POST['area']) ? $_POST['area'] : null;
     $restaurant = isset($_POST['restaurant']) ? $_POST['restaurant'] : null;
     $own_kitchen = isset($_POST['own_kitchen']) ? $_POST['own_kitchen'] : null;
     $tool = empty($_POST['tool']) ?  [] : $_POST['tool'];
@@ -89,7 +89,7 @@ if(isset($_POST['name']) and !empty($sid)){
             $_POST['title'],
             $_POST['info'],
             $_POST['experience'],
-            $_POST['area'],
+            implode(',',$area),
             $restaurant,
             $own_kitchen,
             implode(',',$tool),

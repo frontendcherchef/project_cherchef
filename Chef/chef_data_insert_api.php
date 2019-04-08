@@ -20,7 +20,7 @@ if(isset($_POST['checkme'])){
     $title = $_POST['title'];
     $info = $_POST['info'];
     $experience = $_POST['experience'];
-    $area = $_POST['area'];
+    $area = empty($_POST['area']) ?  [] : $_POST['area'];
     $restaurant = isset($_POST['restaurant']) ? $_POST['restaurant'] : null;
     $own_kitchen = isset($_POST['own_kitchen']) ? $_POST['own_kitchen'] : null;
     $tool = empty($_POST['tool']) ?  [] : $_POST['tool'];
@@ -67,7 +67,7 @@ if(isset($_POST['checkme'])){
             $_POST['title'],
             $_POST['info'],
             $_POST['experience'],
-            $_POST['area'],
+            implode(',',$area),
             $restaurant,
             $own_kitchen,
             implode(',',$tool),

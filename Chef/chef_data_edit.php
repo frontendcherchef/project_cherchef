@@ -6,6 +6,11 @@ $t_sql = "SELECT * FROM `tool` ORDER BY `tool`.`sid`";
 $t_stmt = $pdo->query($t_sql);
 $all_tool = $t_stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//抓area的checkbox的value跟名字配對
+$a_sql = "SELECT * FROM `taiwan_area` ORDER BY `sid`";
+$a_stmt = $pdo->query($a_sql);
+$all_area = $a_stmt->fetchAll(PDO::FETCH_ASSOC);
+
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 
 $sql = "SELECT * FROM chef WHERE sid=$sid";
@@ -16,6 +21,7 @@ if ($stmt->rowCount() == 0) {
     exit;
 }
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 ?>
 <?php include __DIR__ . '/_html_header.php'; ?>
@@ -45,8 +51,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 <-回到資料表</button> </a> </div> <div class="row">
                     <div class="col-lg-6 center_div">
                         <div id="info_bar" class="alert alert-success" role="alert"
-                                style="transform:translate(-50%,-50%); position:fixed; top:50%; left:50%; display:none; z-index:15">
-                            </div>
+                            style="transform:translate(-50%,-50%); position:fixed; top:50%; left:50%; display:none; z-index:15">
+                        </div>
                         <br>
                         <div class="card">
                             <div class="card-body">
@@ -100,9 +106,26 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                                     </div>
                                     <div class="form-group">
+                                        <h6>服務範圍</h6>
+                                        <div class="d-flex flex-wrap justify-content-between">
+                                        <?php $chef_areas=explode(",",$row['area']) ?>
+                                            <?php foreach ($all_area as $area) : ?>
+                                            <div style="display:inline-block">
+                                                <input class="mini-radio " 
+                                                <?php foreach ($chef_areas as $chef_area): ?><?=$chef_area==$area['sid']? 'checked':"";endforeach ?>type="checkbox"
+                                                    id="area_<?= $area['area_code'] ?>" name="area[]"
+                                                    value="<?= $area['area_code'] ?>">
+                                                <label for="area_<?= $area['area_code'] ?>"
+                                                    class="form-label mini-label"><?= $area['area_name'] ?></label>
+                                            </div>
+                                            <?php endforeach ?>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="form-group">
                                         <label for="info">服務範圍</label>
                                         <input type="text" class="form-control" id="area" name="area" placeholder=""
-                                            value="<?= $row['area'] ?>">
+                                            value="<?= $row['area'] ?>"> -->
 
                                         <div class="form-group">
                                             <h6>目前是否在餐廳任職</h6>
@@ -175,7 +198,7 @@ const info_bar = document.querySelector('#info_bar');
 const submit_btn = document.querySelector('#submit_btn');
 
 const fields = [
-    'name', 'email', 'password', 'mobile', 'birthday', 'title', 'info', 'experience', 'area', 'restaurant',
+    'name', 'email', 'password', 'mobile', 'birthday', 'title', 'info', 'experience', 'area[]', 'restaurant',
     'own_kitchen', 'tool[]', 'note'
 ];
 
