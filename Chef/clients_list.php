@@ -2,44 +2,35 @@
     require __DIR__ . '/_cred.php';
     require __DIR__. '/connect.php';
     $page_name = 'clients_list';
-
     // $per_page = 5;
-
     $p_sql = "SELECT * FROM `clients` LEFT JOIN `clients_profile_pics` ON `clients`.`sid`=`clients_profile_pics`.`clients_sid`";
     $p_stmt = $pdo->query($p_sql);
     $all_pics = $p_stmt->fetchAll(PDO::FETCH_ASSOC);
-
     // $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
     $t_sql = "SELECT COUNT(1) FROM clients";
     $t_stmt = $pdo->query($t_sql);
     $total_rows = $t_stmt->fetch(PDO::FETCH_NUM)[0];
-
     // $total_page = ceil($total_rows/$per_page);
-
     // if ($page<1) $page = 1;
     // if ($page>$total_page) $page = $total_page;
-
     // $sql = sprintf("SELECT * FROM clients LIMIT %s, %s", ($page-1)*$per_page, $per_page);
     $sql = sprintf("SELECT * FROM clients LIMIT %s, %s", 1, $total_rows);
     $stmt = $pdo->query($sql);
-
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-
 ?>
 
 <?php include __DIR__ . '/_html_header.php'; ?>
 <?php include __DIR__ . '/_navbar.php'; ?>
 <div class="container pt-3">
+<!-- breadcrumb -->
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb cyan lighten-4">
       <li class="breadcrumb-item"  ><a class="" style="color:skyblue;" href="index.php">Home</a></li>
       <li class="breadcrumb-item active" style="color:orange;">會員資料表</li>
     </ol>
-</nav>
-<h5 class="mb-2" style="color:#e29346">會員資料表</h5>
+  </nav>
+
 <!-- <div><?= "第".$page. " / ".$total_page." 頁，共 ".$total_rows." 筆資料" ?></div> -->
     <!-- <div><?= $total_rows ?></div> -->
     <!-- <div><?= $stmt->rowCount() ?></div> -->
@@ -151,12 +142,11 @@
             })
         }
         
-
-        // $(document).ready( function () {
-        //     $("#list").DataTable({
-        //         bPaginate: false,
-        //         bInfo: false,
-        //     });
-        // } );
+        $(document).ready( function () {
+            $("#list").DataTable({
+                bPaginate: false,
+                bInfo: false,
+            });
+        } );
 </script>
 <?php include __DIR__ . '/_html_footer.php'; ?>

@@ -1,31 +1,23 @@
 <?php
 require __DIR__ . '/connect.php';
 $page_name = 'chef';
-
 // $per_page = 5;
 // $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
-
 $p_sql = "SELECT * FROM `chef` LEFT JOIN `chef_photo` ON `chef`.`sid`=`chef_photo`.`chef_sid`";
 $p_stmt = $pdo->query($p_sql);
 $all_pics = $p_stmt->fetchAll(PDO::FETCH_ASSOC);
-
 //抓tool的sid跟名字配對
 $t_sql = "SELECT * FROM `tool` ORDER BY `tool`.`sid`";
 $t_stmt = $pdo->query($t_sql);
 $all_tool = $t_stmt->fetchAll(PDO::FETCH_ASSOC);
-
-//抓area的sid跟名字配對
-$t_sql = "SELECT * FROM `tool` ORDER BY `tool`.`sid`";
-$t_stmt = $pdo->query($t_sql);
-$all_tool = $t_stmt->fetchAll(PDO::FETCH_ASSOC);
-
+//抓area的area_code跟area_name配對
+$a_sql = "SELECT * FROM `taiwan_area` ORDER BY `sid`";
+$a_stmt = $pdo->query($a_sql);
+$all_area = $a_stmt->fetchAll(PDO::FETCH_ASSOC);
 //算總比數
 $t_sql = "SELECT COUNT(1) FROM chef";
 $t_stmt = $pdo->query($t_sql);
 $total_rows = $t_stmt->fetch(PDO::FETCH_NUM)[0];
-
-
 //總頁數
 // $total_pages = ceil($total_rows / $per_page);
 // if ($page > $total_pages) $page = $total_pages;
@@ -33,7 +25,6 @@ $total_rows = $t_stmt->fetch(PDO::FETCH_NUM)[0];
 // $sql = sprintf("SELECT * FROM chef ORDER BY sid LIMIT %s, %s", ($page - 1) * $per_page, $per_page);
 $sql = sprintf("SELECT * FROM chef ORDER BY sid LIMIT %s, %s", 1, $total_rows);
 $stmt = $pdo->query($sql);
-
 //所有資料一次拿出來
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -42,7 +33,15 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include __DIR__ . '/_html_header.php' ?>
 <?php include __DIR__ . '/_navbar.php' ?>
 <div class="container pt-3">
-    <div style="color:orange;">廚師資料表</div>
+    <!-- breadcrumb -->
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb cyan lighten-4">
+      <li class="breadcrumb-item"  ><a class="" style="color:skyblue;" href="index.php">Home</a></li>
+      <li class="breadcrumb-item active" style="color:orange;">廚師資料表</li>
+    </ol>
+  </nav>
+
     <!-- <div><?= $page . " / " . $total_pages . " 頁，共 " . $total_rows . " 筆資料" ?></div> -->
     <!-- <div><?= $total_rows ?></div> -->
     <!-- <div><?= $stmt->rowCount() ?></div> -->
@@ -126,7 +125,15 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td data-title="經歷" data-fieldName="experience">
                             <?= mb_strimwidth($row['experience'], 0, 100, "...", "UTF-8");  ?>
                         </td>
-                        <td data-title="服務範圍" data-fieldName="area"><?= $row['area'] ?></td>
+                        <td data-title="服務範圍" data-fieldName="area">
+								<?php $chef_areas = explode(",", $row['area']);
+								foreach ($chef_areas as $chef_area) :
+									foreach ($all_area as $area) :
+										if ($chef_area == $area['area_code']) :
+											echo $area['area_name'] . "," ?>
+										<?php endif;
+								endforeach;
+							endforeach; ?></td>                        
                         <td data-title="餐廳" data-fieldName="restaurant"><?= $row['restaurant'] == 1 ? "有" : "無" ?></td>
                         <td data-title="工作室" data-fieldName="own_kitchen"><?= $row['own_kitchen'] == 1 ? "無" : "有" ?>
                         </td>
@@ -176,46 +183,36 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script>
 //初始勾選全部
 $(".mySelect input").prop("checked", true)
-
 //選單顯示or隱藏
 $(".showSelect").click(function() {
     $(".mySelects").toggleClass("active")
 })
-
-
 $(".mySelect").click(function(event) {
     event.stopPropagation();
 })
 $(".mySelect input").change(function(event) {
-
     console.log("c")
     $(".mySelect input:checkbox:not(:checked)").each(function() {
         let fieldName = $(this).attr("id")
         console.log(fieldName)
-
         $(`thead th[data-field=${fieldName}]`).hide();
         $(`tbody td[data-fieldName=${fieldName}]`).hide();
     })
     $(".mySelect input:checkbox:checked").each(function() {
         let fieldName = $(this).attr("id")
         console.log(fieldName)
-
         $(`thead th[data-field=${fieldName}]`).show();
         $(`tbody td[data-fieldName=${fieldName}]`).show();
     })
-
 })
-
 // $(".mySelect input:checkbox:not(:checked)").each(function() {
 //     var column = "table ." + $(this).data("name");
 //     $(column).hide();
 // });
-
 // $("input:checkbox").click(function() {
 //     var column = "table ." + $(this).attr("name");
 //     $(column).toggle();
 // });
-
 function delete_it(sid) {
     if (confirm(`確定要刪除編號為 ${sid} 的資料嗎?`)) {
         location.href = 'chef_delete.php?sid=' + sid;

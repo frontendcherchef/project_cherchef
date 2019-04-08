@@ -240,16 +240,16 @@ const checkForm = () => {
 
                 if (obj.success) {
                     info_bar.className = 'alert alert-success';
-                    let t = 3;
+                    let t = 2;
 
                     function countdown() {
                         t -= 1;
-                        info_bar.innerHTML = `資料修改成功，${t}秒後返回列表`;
+                        info_bar.innerHTML = `資料修改成功`;
                         if (t == 0) {
                             let back = document.referrer;
                             window.location.href = back;
                         }
-                        setTimeout(countdown, 1000);
+                        setTimeout(countdown, 500);
                     }
                     countdown();
                 } else {

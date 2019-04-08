@@ -2,43 +2,42 @@
     require __DIR__. '/_cred.php';
     require __DIR__. '/connect.php';
     $page_name = 'data_food_set';
-
     // $per_page = 10;
     // $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
     $p_sql = "SELECT * FROM food_set_photo";
     $p_stmt = $pdo->query($p_sql);
     $all_pics = $p_stmt->fetchAll(PDO::FETCH_ASSOC);
-
     $t_sql = "SELECT * FROM food_style";
     $t_stmt = $pdo->query($t_sql);
     $all_styles = $t_stmt->fetchAll(PDO::FETCH_ASSOC);
-
     // 算總筆數
     $t_sql = "SELECT COUNT(1) FROM food_set";
     $t_stmt = $pdo->query($t_sql);
     $total_rows = $t_stmt->fetch(PDO::FETCH_NUM)[0];
-
     // 總頁數
     // $total_pages = ceil($total_rows/$per_page);
-
     // if($page < 1) $page = 1;
     // if($page > $total_pages) $page = $total_pages;
-
     // ORDER BY sid DESC LIMIT 表示排序為降冪, 升冪要刪除 DESC
     // $sql = sprintf("SELECT a.sid, a.name, b.name c, a.food_style, a.food_set_price, a.food_set_content FROM food_set a INNER JOIN chef b ON a.chef = b.sid ORDER BY sid DESC LIMIT %s, %s", ($page-1)*$per_page, $per_page);
     $sql = sprintf("SELECT a.sid, a.name, b.name c, a.food_style, a.food_set_price, a.food_set_content FROM food_set a INNER JOIN chef b ON a.chef = b.sid ORDER BY sid DESC LIMIT %s, %s", 1, $total_rows);
     $stmt = $pdo->query($sql);
     // $stmt = $pdo->query("SELECT * FROM address_book"); 此為取全部
-
     // 所有資料一次拿出來
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 <?php include __DIR__. '/_html_header.php';  ?>
 <?php include __DIR__. '/_navbar.php';  ?>
 <div class="container pt-3">
-    <h5 class="mb-2" style="color:#e29346">套餐資料表</h5>
+   <!-- breadcrumb -->
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb cyan lighten-4">
+      <li class="breadcrumb-item"  ><a class="" style="color:skyblue;" href="index.php">Home</a></li>
+      <li class="breadcrumb-item active" style="color:orange;">套餐資料表</li>
+    </ol>
+  </nav>
+
     <!-- <div><?= $page. " / ".$total_pages." 頁，共 ".$total_rows." 筆資料" ?></div> -->
     <!-- <div><?= $total_rows ?></div> -->
     <!-- <div><?= $stmt->rowCount() ?></div> -->
@@ -126,13 +125,21 @@
                         </a>
                     </td>
                     <td data-title="圖片瀏覽">
-                        <?php 
-                            foreach ($all_pics as $pic) :
-                            if ($row['sid'] == $pic['food_set_sid']) : ?>
-                            <a href="/mytest/Chef_pic/food_set_photo/<?= $pic['file_name'] ?>" data-lightbox="roadtrip+<?=$pic['food_set_sid']?>"><i class="fas fa-images"></i></a>
-                            <?php endif;
-                            endforeach
-                            ?>
+                    <ul class="list-unstyled preview">
+                                    <?php
+                                    foreach ($all_pics as $pic) :
+                                        if ($row['sid'] == $pic['food_set_sid']) : ?>
+                                        
+                                            <li style = "margin:6px; width:72px; height:72px;">
+                                                <a href="../Chef_pic/food_set_photo/<?= $pic['file_name'] ?>" data-lightbox="roadtrip+<?= $pic['restaurant_sid'] ?>" style ="cursor: zoom-in;">
+                                                    <!-- 掛的是原本一次顯示一張圖的光箱，有需要換光箱的話再改 -->
+                                                    <img src="../Chef_pic/food_set_photo/<?= $pic['file_name'] ?>" alt="" style = "width:100%; height:100%; object-fit:cover;">
+                                                </a>
+                                            </li>
+                                        <?php endif;
+                                    endforeach
+                                    ?>
+                                 </ul>
                     </td>
                     <td data-title="圖片編輯"><a href="food_set_photo_search.php?search_input=<?= $row['name'] ?>&food_set_sid=<?= $row['sid'] ?>"><i class="fas fa-images"></i></a></td>
                 </tr>

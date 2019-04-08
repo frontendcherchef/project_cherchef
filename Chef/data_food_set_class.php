@@ -2,30 +2,23 @@
 require __DIR__ . '/_cred.php';
 require __DIR__ . '/connect.php';
 $page_name = 'data_food_set_class';
-
 // $per_page = 10;
 // $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
 // 算總筆數
 $t_sql = "SELECT COUNT(1) FROM food_set_class";
 $t_stmt = $pdo->query($t_sql);
 $total_rows = $t_stmt->fetch(PDO::FETCH_NUM)[0];
-
 // 總頁數
 // $total_pages = ceil($total_rows / $per_page);
-
 // if ($page < 1) $page = 1;
 // if ($page > $total_pages) $page = $total_pages;
-
 // ORDER BY sid DESC LIMIT 表示排序為降冪, 升冪要刪除 DESC
 // $sql = sprintf("SELECT a.sid, a.name, b.name c FROM food_set_class a INNER JOIN food_set b ON a.food_set = b.sid ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $per_page, $per_page);
 $sql = sprintf("SELECT a.sid, a.name, b.name c FROM food_set_class a INNER JOIN food_set b ON a.food_set = b.sid ORDER BY sid DESC LIMIT %s, %s", 1, $total_rows);
 $stmt = $pdo->query($sql);
 // $stmt = $pdo->query("SELECT * FROM address_book"); 此為取全部
-
 // 所有資料一次拿出來
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 <?php include __DIR__ . '/_html_header.php';  ?>
 <?php include __DIR__ . '/_navbar.php';  ?>
@@ -118,27 +111,20 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             location.href = 'data_food_set_class_delete.php?sid=' + sid;
         }
     }
-
     // 以下為即時搜尋新增
-
     // $("#search_input").on("keyup", function() {
     //     var value = $(this).val().toLowerCase();
     //     $("#myTable tr").filter(function() {
     //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-
     //     });
     //     console.log($("#myTable tr:visible").length)
     // });
-
     // 以上為即時搜尋新增
     
     // $('#test').bootstrapTable({
-
     //     formatShowingRows: function (pageFrom, pageTo, totalRows) {
     //         return '第 ' + pageFrom + ' 頁&nbsp;&nbsp;共 ' + pageTo + ' 頁&nbsp;&nbsp;每頁顯示 ' + totalRows + ' 筆';
     //     }
-
     // });
-
 </script>
 <?php include __DIR__ . '/_html_footer.php';  ?> 

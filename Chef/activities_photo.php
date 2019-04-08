@@ -28,7 +28,14 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include __DIR__ . '/_navbar.php' ?>
 <br>
 <div class="container">
-<div class="form_data_font_style" style="color:orange;">活動圖片資料表</div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb cyan lighten-4">
+      <li class="breadcrumb-item"  ><a class="" style="color:skyblue;" href="index.php">Home</a></li>
+      <li class="breadcrumb-item"  ><a class="" style="color:skyblue;" href="activities.php">活動資料表</a></li>
+      <li class="breadcrumb-item active" style="color:orange;">活動圖片資料表</li>
+    </ol>
+  </nav>
+
 <div class="form_data_font_style"><?= '總共' . $total_rows . '筆資料' ?></div>
 <div class="form_data_font_style"><?= '總共' . $total_pages . '頁' ?></div>
 
@@ -73,7 +80,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- 上排按鈕 -->
 <div class="center_div">
     <a href="activities_photo_insert.php"><button type="button" class="btn btn-warning  col-md-3  ">新增資料</button></a>
-    <a href="activities.php"><button type="button" class="btn btn-warning  col-md-3  ">回到活動資料表</button></a>
+
     <br>
 </div>
 <br>
@@ -106,7 +113,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ?>
 
                     <td><?= $user['name'] ?></td>
-                    <td><?= $row['file_name'] ?></td>
+                    <td>   <img style="width:100px" src="../Chef_pic/act_photo/<?= $row['file_name'] ?>">  </td>
                     <td><a href="javascript: delete_it(<?= $row['sid'] ?>,'<?= $row['file_name'] ?>')"><i class="fas fa-trash-alt"></i></a></td>
                     <td><a href="activities_photo_data_edit.php?sid=<?= $row['sid'] ?>" ><i class="fas fa-edit"></i></a></td>
 

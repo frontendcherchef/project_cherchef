@@ -74,13 +74,17 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <!-- 上排按鈕 -->
-<div class=" ">
-  <a href="cooking_house_data_insert.php"><button type="button" class="btn btn-warning  col-md-3  ">新增資料</button></a>
-  <a href="cooking_house_insert.php"><button type="button" class="btn btn-warning  col-md-3  ">新增一筆測試資料</button></a>
-  <a href="cooking_house_photo.php"><button type="button" class="btn btn-warning  col-md-3  ">管理圖片</button></a>
-  <br>
+<div class="row">
+<div class="col-lg-12">
+<div class="float-right mb-2">
+  <a href="cooking_house_data_insert.php"><button type="button" class="btn btn-warning mr-2">新增資料</button></a>
+  <a href="cooking_house_insert.php"><button type="button" class="btn btn-warning mr-2">新增一筆測試資料</button></a>
+  <a href="cooking_house_photo.php"><button type="button" class="btn btn-warning">管理圖片</button></a>
 </div>
-<br>
+<div class="buttons-toolbar">
+</div>
+</div>
+</div>
 <!-- Search 
 <form name="form1" action="cooking_house_data_search.php" method="post">
   <div class="form-group "style="border:1px solid skyorange">
@@ -94,9 +98,9 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </div>
 <form>
  --> 
-
+ <div class="row">
  <div class="col-lg-12 table-responsive card-list-table">
- <table class="table table-warning table-hover text-nowrap"
+ <table class="table table-warning table-hover"
              data-locale="zh-TW"
              data-toggle="table"
              data-pagination="true"
@@ -120,8 +124,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <th scope="col">Web</th>
       <div col-md-6>
       <th scope="col">Intro</th>
-      <th scope="col">刪除</th>
-      <th scope="col">編輯</th>
+      <th scope="col">更多操作</th>
       <th scope="col">圖片瀏覽</th>
       <th scope="col">圖片編輯</th>
       </div>
@@ -131,30 +134,38 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <?php foreach($rows as $row):?>
     <tr class="form_data_font_style">
  
-      <td><?=$row['sid']?></td>
-      <td><?=$row['name']?></td>
-      <td><?=$row['phone']?></td>
-      <td><?=$row['address']?></td>
-      <td><?=$row['web']?></td>
-      <td><?=$row['intro']?></td>
+      <td data-title="#"><?=$row['sid']?></td>
+      <td data-title="Name"><?=$row['name']?></td>
+      <td data-title="Phone"><?=$row['phone']?></td>
+      <td data-title="Address"><?=$row['address']?></td>
+      <td data-title="Web"><?=$row['web']?></td>
+      <td data-title="Intro"><?=$row['intro']?></td>
      <!-- <td><a href="cooking_house_delete.php?sid=<?= $row['sid']?>"><i class="fas fa-trash-alt"></i></a></td>    -->
-     <td><a href="javascript: delete_it(<?= $row['sid'] ?>)"><i class="fas fa-trash-alt"></i></a></td>   
-     <td><a href="cooking_house_data_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit"></i></a></td>   
-     <td>
-        <?php 
-            foreach ($all_pics as $pic) :
-              if ($row['sid'] == $pic['cooking_house_sid']) : ?>
-              <a href="/mytest/Chef_pic/cooking_house_photo/<?= $pic['file_name'] ?>" data-lightbox="roadtrip+<?=$pic['cooking_house_sid']?>"><i class="fas fa-images"></i></a>
-               <?php endif;
-            endforeach
-            ?>
+     <td data-title="更多操作"><a href="javascript: delete_it(<?= $row['sid'] ?>)"><i class="fas fa-trash-alt"></i></a>
+     <a href="cooking_house_data_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit"></i></a></td>   
+     <td data-title="圖片瀏覽">
+     <ul class="list-unstyled preview">
+                                    <?php
+                                    foreach ($all_pics as $pic) :
+                                        if ($row['sid'] == $pic['cooking_house_sid']) : ?>
+                                        
+                                            <li style = "margin:6px; width:72px; height:72px;">
+                                                <a href="../Chef_pic/cooking_house_photo/<?= $pic['file_name'] ?>" data-lightbox="roadtrip+<?= $pic['restaurant_sid'] ?>" style ="cursor: zoom-in;">
+                                                    <!-- 掛的是原本一次顯示一張圖的光箱，有需要換光箱的話再改 -->
+                                                    <img src="../Chef_pic/cooking_house_photo/<?= $pic['file_name'] ?>" alt="" style = "width:100%; height:100%; object-fit:cover;">
+                                                </a>
+                                            </li>
+                                        <?php endif;
+                                    endforeach
+                                    ?>
+                                 </ul>
       </td>
-      <td><a href="cooking_house_photo_search.php?search_input=<?= $row['name'] ?>&cooking_house_sid=<?= $row['sid'] ?>"><i class="fas fa-images"></i></a></td>
+      <td data-title="圖片編輯"><a href="cooking_house_photo_search.php?search_input=<?= $row['name'] ?>&cooking_house_sid=<?= $row['sid'] ?>"><i class="fas fa-images"></i></a></td>
     </tr>
 <?php endforeach; ?>
   </tbody>
 </table>
-<br>
+</div>
 </div>
 <script>
         function delete_it(sid){

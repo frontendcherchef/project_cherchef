@@ -19,13 +19,6 @@ $page_name = 'clients_add';
     }
 </style>
 <div class="container">
-<nav aria-label="breadcrumb" class="mt-2">
-    <ol class="breadcrumb cyan lighten-4">
-      <li class="breadcrumb-item"><a class="" style="color:skyblue;" href="index.php">Home</a></li>
-      <li class="breadcrumb-item"><a class="" style="color:skyblue;" href="clients_list.php">會員資料表</a></li>
-      <li class="breadcrumb-item active" style="color:orange;">會員新增</li>
-    </ol>
-</nav>
     <div class="row">
         <div class="col-12">
             <div id="info_bar" class="alert alert-success" role="alert" style="display: none;">

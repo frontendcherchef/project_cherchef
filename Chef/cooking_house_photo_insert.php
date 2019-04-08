@@ -1,12 +1,6 @@
 <?php
 require __DIR__. '/connect.php';
-
-$cooking_house_sql = "SELECT * FROM cooking_house ORDER BY sid ";
-$cooking_house_stmt = $pdo->query($cooking_house_sql);
-$all_c=$cooking_house_stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
-
 <?php include __DIR__. '/_html_header.php';  ?>
 <?php include __DIR__. '/_navbar.php';  ?>
     <style>
@@ -39,12 +33,8 @@ $all_c=$cooking_house_stmt->fetchAll(PDO::FETCH_ASSOC);
                     <form name="form1" method="post" enctype="multipart/form-data" onsubmit="checkForm()">
 
                     <div class="form-group">
-                    <label for="cooking_house_sid">料理空間名稱</label>
-                                            <select name="cooking_house_sid" id="cooking_house_sid" >
-                                                <?php foreach($all_c as $cooking_house):?>
-                                                <option value="<?= $cooking_house['sid'] ?>" > <?=$cooking_house['name'] ?></option>
-                                                <?php endforeach;?>
-                                            </select><br>
+                            <label for="cooking_house_sid">料理空間sid</label>
+                            <input type="text" class="form-control" id="cooking_house_sid" name="cooking_house_sid" placeholder="" value="">
                         選擇上傳檔案:
                          <br>                
                          <input type="file" name="my_file[]" id ="my_file" multiple="multiple" accept="image/gif, image/jpeg, image/png, image/jpg, image/bmp" ><br> 

@@ -1,6 +1,8 @@
 <?php
 require __DIR__. '/connect.php';
+
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
+
 $sql = "SELECT * FROM cooking_house_photo WHERE sid=$sid";
 
 $stmt = $pdo->query($sql);
@@ -15,12 +17,6 @@ if($stmt->rowCount()==0){
     exit;
 }
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$cooking_house_sql = "SELECT * FROM cooking_house ORDER BY sid ";
-$cooking_house_stmt = $pdo->query($cooking_house_sql);
-$all_c=$cooking_house_stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
 
 ?>
 <?php include __DIR__. '/_html_header.php';  ?>
@@ -49,14 +45,8 @@ $all_c=$cooking_house_stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="form-group">
                              <input type="hidden" name="sid" value="<?= $row['sid']?>">
                              <input type="hidden" name="file_name" value="<?= $row['file_name']?>">
-                             <!-- <label for="cooking_house_sid">料理空間sid</label>
-                            <input type="text" class="form-control" id="cooking_house_sid" name="cooking_house_sid" placeholder="" value="<?= $row['cooking_house_sid']?>"> -->
-                            <label for="cooking_house_sid">料理空間名稱</label>
-                                            <select name="cooking_house_sid" id="cooking_house_sid" disabled>
-                                                <?php foreach($all_c as $cooking_house):?>
-                                                <option value="<?= $cooking_house['sid'] ?>" <?=$cooking_house['sid']==$row['cooking_house_sid']? 'selected':"" ?>> <?=$cooking_house['name'] ?></option>
-                                                <?php endforeach;?>
-                                            </select><br>
+                             <label for="cooking_house_sid">料理空間sid</label>
+                            <input type="text" class="form-control" id="cooking_house_sid" name="cooking_house_sid" placeholder="" value="<?= $row['cooking_house_sid']?>">
                         選擇上傳檔案:
                          <br>                
                          <input type="file" name="my_file" multiple="multiple"><br> 

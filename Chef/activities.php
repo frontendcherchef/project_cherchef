@@ -33,7 +33,12 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include __DIR__ . '/_navbar.php' ?>
 <br>
 <div class="container">
-<div class="form_data_font_style" style="color:orange;">活動資料表</div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb cyan lighten-4">
+      <li class="breadcrumb-item"  ><a class="" style="color:skyblue;" href="index.php">Home</a></li>
+      <li class="breadcrumb-item active" style="color:orange;">活動資料表</li>
+    </ol>
+  </nav>
 <div class="form_data_font_style"><?= '總共' . $total_rows . '筆資料' ?></div>
 <div class="form_data_font_style"><?= '總共' . $total_pages . '頁' ?></div>
 
@@ -129,14 +134,22 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <!-- 照片瀏覽與刪除欄位 -->
                     <!-- 光箱   -->
                     <td>
-                        <?php 
-                        foreach ($all_pics as $pic) :
-                            if ($row['sid'] == $pic['activities_sid']) : ?>
-                        <a  href="/mytest/Chef_pic/act_photo/<?= $pic['file_name'] ?>"  data-lightbox="roadtrip+<?=$pic['activities_sid']?>"><i class="fas fa-images"></i></a>
-                        <?php endif;
-                endforeach
-                ?>
-                    </td>
+                    <ul class="list-unstyled preview">
+                                    <?php
+                                    foreach ($all_pics as $pic) :
+                                        if ($row['sid'] == $pic['activities_sid']) : ?>
+                                        
+                                            <li style = "margin:6px; width:72px; height:72px;">
+                                                <a href="../Chef_pic/act_photo/<?= $pic['file_name'] ?>" data-lightbox="roadtrip+<?= $pic['restaurant_sid'] ?>" style ="cursor: zoom-in;">
+                                                    <!-- 掛的是原本一次顯示一張圖的光箱，有需要換光箱的話再改 -->
+                                                    <img src="../Chef_pic/act_photo/<?= $pic['file_name'] ?>" alt="" style = "width:100%; height:100%; object-fit:cover;">
+                                                </a>
+                                            </li>
+                                        <?php endif;
+                                    endforeach
+                                    ?>
+                                 </ul>
+      </td>
                     <td><a href="activities_photo_search.php?search_input=<?= $row['name'] ?>&activities_sid=<?= $row['sid'] ?>"><i class="fas fa-images"></i></a></td>
 
 
