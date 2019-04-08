@@ -3,9 +3,9 @@ require __DIR__.'/connect.php';
 
 
 $sql = "INSERT INTO `add_utensils`(
-        `clients`,`name`, `rent`, `price`, `quantity`, `details`, `intro`
+        `clients`,`name`, `rent`, `price`,  `details`, `intro`
         ) VALUES (
-            ?, ?, ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?, ? 
         )";
 
 $res = $pdo->query("SELECT MAX(`sid`) AS maxsid FROM `add_utensils`");

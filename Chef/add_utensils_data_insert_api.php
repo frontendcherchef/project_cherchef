@@ -16,7 +16,6 @@ if(isset($_POST['checkme'])){
     $name = $_POST['name'];
     $rent = $_POST['rent'];
     $price = $_POST['price'];
-    $quantity = $_POST['quantity'];
     $details = $_POST['details'];
     $intro = $_POST['intro'];
 
@@ -32,9 +31,9 @@ if(isset($_POST['checkme'])){
 
 
     $sql = "INSERT INTO `add_utensils`(
-            `clients`,`name`, `rent`, `price`, `quantity`, `details`, `intro`
+            `clients`,`name`, `rent`, `price`, `details`, `intro`
             ) VALUES (
-              ?, ?, ?, ?, ?, ?, ?
+              ?, ?, ?, ?, ?, ?
             )";
 
     try {
@@ -45,7 +44,6 @@ if(isset($_POST['checkme'])){
             $_POST['name'],
             $_POST['rent'],
             $_POST['price'],
-            $_POST['quantity'],
             $_POST['details'],
             $_POST['intro'],
         ]);
