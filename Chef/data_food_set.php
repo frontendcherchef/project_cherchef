@@ -3,8 +3,8 @@
     require __DIR__. '/connect.php';
     $page_name = 'data_food_set';
 
-    $per_page = 10;
-    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    // $per_page = 10;
+    // $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
     $p_sql = "SELECT * FROM food_set_photo";
     $p_stmt = $pdo->query($p_sql);
@@ -20,13 +20,14 @@
     $total_rows = $t_stmt->fetch(PDO::FETCH_NUM)[0];
 
     // 總頁數
-    $total_pages = ceil($total_rows/$per_page);
+    // $total_pages = ceil($total_rows/$per_page);
 
-    if($page < 1) $page = 1;
-    if($page > $total_pages) $page = $total_pages;
+    // if($page < 1) $page = 1;
+    // if($page > $total_pages) $page = $total_pages;
 
     // ORDER BY sid DESC LIMIT 表示排序為降冪, 升冪要刪除 DESC
-    $sql = sprintf("SELECT a.sid, a.name, b.name c, a.food_style, a.food_set_price, a.food_set_content FROM food_set a INNER JOIN chef b ON a.chef = b.sid ORDER BY sid DESC LIMIT %s, %s", ($page-1)*$per_page, $per_page);
+    // $sql = sprintf("SELECT a.sid, a.name, b.name c, a.food_style, a.food_set_price, a.food_set_content FROM food_set a INNER JOIN chef b ON a.chef = b.sid ORDER BY sid DESC LIMIT %s, %s", ($page-1)*$per_page, $per_page);
+    $sql = sprintf("SELECT a.sid, a.name, b.name c, a.food_style, a.food_set_price, a.food_set_content FROM food_set a INNER JOIN chef b ON a.chef = b.sid ORDER BY sid DESC LIMIT %s, %s", 1, $total_rows);
     $stmt = $pdo->query($sql);
     // $stmt = $pdo->query("SELECT * FROM address_book"); 此為取全部
 
@@ -37,19 +38,20 @@
 <?php include __DIR__. '/_html_header.php';  ?>
 <?php include __DIR__. '/_navbar.php';  ?>
 <div class="container pt-3">
-    <div><?= $page. " / ".$total_pages." 頁，共 ".$total_rows." 筆資料" ?></div>
+    <h5 class="mb-2" style="color:#e29346">套餐資料表</h5>
+    <!-- <div><?= $page. " / ".$total_pages." 頁，共 ".$total_rows." 筆資料" ?></div> -->
     <!-- <div><?= $total_rows ?></div> -->
     <!-- <div><?= $stmt->rowCount() ?></div> -->
 
     <div class="row">
         <div class="col-lg-12">
             <!-- Search -->
-            <form class="form-inline d-flex" name="form1" action="<?=$page_name ?>_search.php" method="post">
+            <!-- <form class="form-inline d-flex" name="form1" action="<?=$page_name ?>_search.php" method="post">
             <input type="text" class="form-control col-12 col-md-6 mr-2 my-2" id="search_input" name="search_input" placeholder="搜尋名稱">
             <button type="submit" class="btn btn-warning col-12 col-md-2 col-lg-1 my-md-2 mb-2" >Search</button>
-            </form>
+            </form> -->
             <!-- -->
-            <nav class="d-flex mb-2">
+            <!-- <nav class="d-flex mb-2">
                 <ul class="pagination pagination-sm mb-0 mr-auto align-items-center">
                     <li class="page-item <?= $page<=1 ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $page-1 ?>">&lt;</a>
@@ -63,24 +65,38 @@
                         <a class="page-link" href="?page=<?= $page+1 ?>">&gt;</a>
                     </li>
                 </ul>
-                <div>
-                    <a href="data_food_set_photo.php"><button type="button" class="btn btn-warning mr-2">管理圖片</button></a>
-                    <a href="data_food_set_insert.php"><button type="button" class="btn btn-warning">新增資料表</button></a>
-                </div>
-            </nav>
+            </nav> -->
+            <div class="float-right mb-2">
+                <a href="data_food_set_photo.php"><button type="button" class="btn btn-warning mr-2">管理圖片</button></a>
+                <a href="data_food_set_insert.php"><button type="button" class="btn btn-warning">新增資料表</button></a>
+            </div>
+            <div class="buttons-toolbar mb-2">
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12 table-responsive card-list-table">
-            <table class="table table-warning table-hover">
+            <table class="table table-warning table-hover"
+             data-locale="zh-TW"
+             data-toggle="table"
+             data-pagination="true"
+             data-page-list="[10, 25, 50, 100, 200, All]"
+             data-sort-order="desc"
+             data-search="true"
+             data-search-align="left"
+             data-pagination-pre-text="上一頁"
+             data-pagination-next-text="下一頁"
+             data-buttons-class="warning"
+             data-buttons-toolbar=".buttons-toolbar"
+            >
                 <thead class="bg-warning text-nowrap">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">套餐名稱</th>
-                    <th scope="col">廚師</th>
-                    <th scope="col">料理風格</th>
-                    <th scope="col">套餐價格</th>
-                    <th scope="col">套餐描述</th>
+                    <th scope="col" data-sortable="true">#</th>
+                    <th scope="col" data-sortable="true">套餐名稱</th>
+                    <th scope="col" data-sortable="true">廚師</th>
+                    <th scope="col" data-sortable="true">料理風格</th>
+                    <th scope="col" data-sortable="true">套餐價格</th>
+                    <th scope="col" data-sortable="true">套餐描述</th>
                     <th scope="col">編輯</th>
                     <th scope="col">刪除</th>
                     <th scope="col">圖片瀏覽</th>
