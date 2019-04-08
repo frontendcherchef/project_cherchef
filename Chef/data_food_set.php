@@ -129,7 +129,7 @@
                         <?php 
                             foreach ($all_pics as $pic) :
                             if ($row['sid'] == $pic['food_set_sid']) : ?>
-                            <a href="/mytest/Chef_pic/food_set_photo/<?= $pic['file_name'] ?>" data-lightbox="roadtrip+<?=$pic['food_set_sid']?>"><i class="fas fa-images"></i></a>
+                            <a href="../Chef_pic/food_set_photo/<?= $pic['file_name'] ?>" data-lightbox="roadtrip+<?=$pic['food_set_sid']?>"><i class="fas fa-images"></i></a>
                             <?php endif;
                             endforeach
                             ?>
