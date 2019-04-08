@@ -83,11 +83,10 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             >
                 <thead class="bg-warning text-nowrap">
                     <tr>
-                        <th scope="col" data-sortable="true" data-align="center">#</th>
+                        <th scope="col" data-sortable="true">#</th>
                         <th scope="col" data-sortable="true">套餐大項</th>
                         <th scope="col" data-sortable="true">套餐</th>
-                        <th scope="col" data-align="center">編輯</th>
-                        <th scope="col" data-align="center">刪除</th>
+                        <th scope="col">更多操作</th>
                     </tr>
                 </thead>
                 <tbody id="myTable">
@@ -96,11 +95,10 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td data-title="#"><?= $row['sid'] ?></td>
                         <td data-title="套餐大項"><?= $row['name'] ?></td>
                         <td data-title="套餐"><?= $row['c'] ?></td>
-                        <td data-title="編輯">
+                        <td data-title="更多操作">
                             <a class="fascl fascl-edit" href="data_food_set_class_edit.php?sid=<?= $row['sid'] ?>">
                                 <i class="fas fa-edit"></i>
                             </a>
-                        <td data-title="刪除">
                             <a class="fascl fascl-trash" href="javascript: delete_it(<?= $row['sid'] ?>)">
                                 <i class="fas fa-trash-alt"></i>
                             </a>

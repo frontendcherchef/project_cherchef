@@ -97,8 +97,7 @@
                     <th scope="col" data-sortable="true">料理風格</th>
                     <th scope="col" data-sortable="true">套餐價格</th>
                     <th scope="col" data-sortable="true">套餐描述</th>
-                    <th scope="col">編輯</th>
-                    <th scope="col">刪除</th>
+                    <th scope="col">更多操作</th>
                     <th scope="col">圖片瀏覽</th>
                     <th scope="col">圖片編輯</th>
                 </tr>
@@ -118,10 +117,11 @@
                         ?><?php endif;endforeach;endforeach; ?></td>
                     <td data-title="套餐價格"><?= $row['food_set_price'] ?></td>
                     <td data-title="套餐描述"><?= $row['food_set_content'] ?></td>
-                    <td data-title="編輯">
-                        <a class="fascl fascl-edit" href="data_food_set_edit.php?sid=<?= $row['sid'] ?>"><i class="fas fa-edit"></i></a>
-                    </td>
-                    <td data-title="刪除"><a class="fascl fascl-trash" href="javascript: delete_it(<?= $row['sid'] ?>)">
+                    <td data-title="更多操作">
+                        <a class="fascl fascl-edit" href="data_food_set_edit.php?sid=<?= $row['sid'] ?>">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="fascl fascl-trash" href="javascript: delete_it(<?= $row['sid'] ?>)">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
