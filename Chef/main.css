@@ -293,3 +293,14 @@ ul.mySelects.active {
 }
 
 /* 選擇顯示欄位 */
+
+/* 圖片編輯縮圖 */
+.previewPic{
+    width: 100px;
+    filter: brightness(0.7);
+    transition:.3s
+}
+.previewPic:hover{
+    width: 100px;
+    filter: brightness(0.9);
+}
