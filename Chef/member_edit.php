@@ -125,16 +125,16 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                         if (obj.success) {
                     info_bar.className = 'alert alert-success';
-                    let t = 2;
+                    let t = 3;
 
                     function countdown() {
                         t -= 1;
-                        info_bar.innerHTML = `資料修改成功`;
+                        info_bar.innerHTML = `資料修改成功，${t}秒後返回列表`;
                         if (t == 0) {
                             let back = document.referrer;
                             window.location.href = back;
                         }
-                        setTimeout(countdown, 500);
+                        setTimeout(countdown, 1000);
                     }
                     countdown();
                 } else {

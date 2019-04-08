@@ -15,7 +15,7 @@ $sid = isset($_POST['sid']) ? intval($_POST['sid']) : 0;
 if (isset($_POST['checkme'])) {
 
     $name = $_POST['name'];
-    $gender = $_POST['gender'];
+//    $gender = $_POST['gender'];
     $mobile = $_POST['mobile'];
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -32,10 +32,22 @@ if (isset($_POST['checkme'])) {
         exit;
     }
 
+    // TODO:檢查name長度
 
-    $sql = "INSERT INTO `clients`(`name`, `gender`, `mobile`, `email`, `password`, `address`, `birthday`)
+
+    // 檢查email格式
+    if (! filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $result['errorCode'] = 402;
+        $result['errorMsg'] = 'Email格式有誤';
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    // TODO:檢查mobile長度
+
+
+    $sql = "INSERT INTO `clients`(`name`, `mobile`, `email`, `password`, `address`, `birthday`)
                         VALUES(
-                          ?, ?, ?, ?, ?, ?, ?
+                          ?, ?, ?, ?, ?, ?
                         )";
 
     try {
@@ -44,12 +56,13 @@ if (isset($_POST['checkme'])) {
 
         $stmt->execute([
             $_POST['name'],
-            $_POST['gender'],
+//            $_POST['gender'],
             $_POST['mobile'],
             $_POST['email'],
             $_POST['password'],
             $_POST['address'],
             $_POST['birthday'],
+
         ]);
 
         if ($stmt->rowCount() == 1) {
@@ -65,6 +78,4 @@ if (isset($_POST['checkme'])) {
         $result['errorMsg'] = '該Email已經存在';
     }
 }
-
-
-// echo json_encode($result, JSON_UNESCAPED_UNICODE);
+echo json_encode($result, JSON_UNESCAPED_UNICODE);
