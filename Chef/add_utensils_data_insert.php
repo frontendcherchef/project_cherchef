@@ -58,11 +58,11 @@ require __DIR__. '/connect.php';
                             
                         </div>
                         
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="quantity">訂購數量</label>
                             <input type="text" class="form-control" id="quantity" name="quantity" placeholder=""
                                    value="">
-                        </div>
+                        </div> -->
                         
                         <div class="form-group">
                             <label for="details">詳細資訊</label>
@@ -94,7 +94,7 @@ require __DIR__. '/connect.php';
             'name',
             'rent',
             'price',
-            'quantity',
+            // 'quantity',
             'details',
             'intro',
         ];
