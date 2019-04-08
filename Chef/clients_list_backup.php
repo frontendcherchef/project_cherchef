@@ -1,27 +1,26 @@
 <?php
-    require __DIR__ . '/_cred.php';
     require __DIR__. '/connect.php';
+
     $page_name = 'clients_list';
 
-    // $per_page = 5;
+    $per_page = 5;
 
     $p_sql = "SELECT * FROM `clients` LEFT JOIN `clients_profile_pics` ON `clients`.`sid`=`clients_profile_pics`.`clients_sid`";
     $p_stmt = $pdo->query($p_sql);
     $all_pics = $p_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
     $t_sql = "SELECT COUNT(1) FROM clients";
     $t_stmt = $pdo->query($t_sql);
     $total_rows = $t_stmt->fetch(PDO::FETCH_NUM)[0];
 
-    // $total_page = ceil($total_rows/$per_page);
+    $total_page = ceil($total_rows/$per_page);
 
-    // if ($page<1) $page = 1;
-    // if ($page>$total_page) $page = $total_page;
+    if ($page<1) $page = 1;
+    if ($page>$total_page) $page = $total_page;
 
-    // $sql = sprintf("SELECT * FROM clients LIMIT %s, %s", ($page-1)*$per_page, $per_page);
-    $sql = sprintf("SELECT * FROM clients LIMIT %s, %s", 1, $total_rows);
+    $sql = sprintf("SELECT * FROM clients LIMIT %s, %s", ($page-1)*$per_page, $per_page);
     $stmt = $pdo->query($sql);
 
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -33,14 +32,14 @@
 <?php include __DIR__ . '/_html_header.php'; ?>
 <?php include __DIR__ . '/_navbar.php'; ?>
 <div class="container pt-3">
-<h5 class="mb-2" style="color:#e29346">會員資料表</h5>
-<!-- <div><?= "第".$page. " / ".$total_page." 頁，共 ".$total_rows." 筆資料" ?></div> -->
+
+<div><?= "第".$page. " / ".$total_page." 頁，共 ".$total_rows." 筆資料" ?></div>
     <!-- <div><?= $total_rows ?></div> -->
     <!-- <div><?= $stmt->rowCount() ?></div> -->
 
     <div class="row">
         <div class="col-lg-12">
-            <!-- <nav class="d-flex mb-2">
+            <nav class="d-flex mb-2">
                 <ul class="pagination pagination-sm mb-0 mr-auto align-items-center">
                     <li class="page-item <?= $page<=1 ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $page-1 ?>">&lt;</a>
@@ -54,39 +53,25 @@
                         <a class="page-link" href="?page=<?= $page+1 ?>">&gt;</a>
                     </li>
                 </ul>
-            </nav> -->
-            <div class="float-right mb-2">
-                <a href="clients_add.php"><button type="button" class="btn btn-warning">新增資料表</button></a>
-            </div>
-            <div class="buttons-toolbar mb-2">
-            </div>
+                <div>
+                    <a href="clients_add.php"><button type="button" class="btn btn-warning">新增資料表</button></a>
+                </div>
+            </nav>
         </div>
     </div>
 
     <div class="row">
     <div class="col-lg-12 table-responsive card-list-table">
-        <table class="table table-warning table-hover"
-             data-locale="zh-TW"
-             data-toggle="table"
-             data-pagination="true"
-             data-page-list="[10, 25, 50, 100, 200, All]"
-             data-sort-order="desc"
-             data-search="true"
-             data-search-align="left"
-             data-pagination-pre-text="上一頁"
-             data-pagination-next-text="下一頁"
-             data-buttons-class="warning"
-             data-buttons-toolbar=".buttons-toolbar"
-            >
+    <table id="list"  class="table table-warning table-hover">
         <thead class="bg-warning text-nowrap">
             <tr>
-                <th scope="col" data-sortable="true" data-field="sid">#</th>
-                <th scope="col" data-sortable="true" data-field="name">姓名</th>
-                <th scope="col" data-sortable="true" data-field="gender">性別</th>
-                <th scope="col" data-sortable="true" data-field="mobile">手機</th>
-                <th scope="col" data-sortable="true" data-field="email">電子信箱</th>
-                <th scope="col" data-sortable="true" data-field="birthday">生日</th>
-                <th scope="col" data-sortable="true" data-field="address">地址</th>
+                <th scope="col" data-field="sid">#</th>
+                <th scope="col" data-field="name">姓名</th>
+                <th scope="col" data-field="gender">性別</th>
+                <th scope="col" data-field="mobile">手機</th>
+                <th scope="col" data-field="email">電子信箱</th>
+                <th scope="col" data-field="birthday">生日</th>
+                <th scope="col" data-field="address">地址</th>
                 <th scope="col">更多操作</th>
             </tr>
         </thead>
@@ -94,14 +79,14 @@
                     <?php foreach ($rows as $row) : ?>
                     <tr>
 
-                        <td data-title="#"><?= '#'.$row['sid'] ?></td>
-                        <td data-title="姓名"><?= $row['name'] ?></a></td>
-                        <td data-title="性別"><?= $row['gender'] ?></td>
-                        <td data-title="手機"><?= $row['mobile'] ?></td>
-                        <td data-title="電子信箱"><?= $row['email'] ?></td>
-                        <td data-title="生日"><?= $row['birthday'] ?></td>
-                        <td data-title="地址"><?= $row['address'] ?></td>
-                        <td data-title="更多操作">
+                        <td><?= '#'.$row['sid'] ?></td>
+                        <td><?= $row['name'] ?></a></td>
+                        <td><?= $row['gender'] ?></td>
+                        <td><?= $row['mobile'] ?></td>
+                        <td><?= $row['email'] ?></td>
+                        <td><?= $row['birthday'] ?></td>
+                        <td><?= $row['address'] ?></td>
+                        <td>
                             <a href="clients_detail.php?sid=<?= $row['sid'] ?>"><i class="far fa-eye"></i></a>
                             <a href="clients_edit.php?sid=<?= $row['sid'] ?>"><i class="far fa-edit"></i></a>
                             <a href="javascript:delete_data(<?= $row['sid'] ?>)"><i class="far fa-trash-alt"></i></a>
