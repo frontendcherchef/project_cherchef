@@ -23,7 +23,7 @@ if(isset($_POST['checkme'])){
     $result['post'] = $_POST;  // 做 echo 檢查
 
     
-    if(empty ($clients) or empty($name) or empty($rent) or empty($price) or empty($quantity) or empty($details) or empty($intro)){
+    if(empty ($clients) or empty($name) or empty($rent) or empty($price) or empty($details) or empty($intro)){
         $result['errorCode'] = 400;
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
         exit;
